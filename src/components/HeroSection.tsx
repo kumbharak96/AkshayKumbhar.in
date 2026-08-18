@@ -112,6 +112,28 @@ export default function HeroSection({ onWatchShowreel, onViewProjects }: HeroSec
         playsInline
       />
 
+      {/* Scroll Down Indicator */}
+      <div 
+        onClick={onViewProjects}
+        className="absolute bottom-8 left-8 z-30 flex items-center gap-3 cursor-pointer group text-zinc-400 hover:text-white transition-colors duration-300 select-none"
+      >
+        <div className="flex items-center justify-center w-9 h-9 rounded-full border border-zinc-700 group-hover:border-primary-purple group-hover:bg-primary-purple/10 transition-all duration-300 shadow-md">
+          <svg 
+            className="w-4 h-4 text-zinc-400 group-hover:text-primary-purple transition-colors animate-bounce mt-0.5" 
+            fill="none" 
+            stroke="currentColor" 
+            strokeWidth="2.5" 
+            viewBox="0 0 24 24" 
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
+        </div>
+        <span className="text-xs font-bold uppercase tracking-widest group-hover:translate-x-1 transition-transform duration-300">
+          scroll down for website
+        </span>
+      </div>
+
       {/* Floating Sound Toggle Button */}
       <div className="absolute bottom-8 right-8 z-30 flex items-center gap-3">
         <button
