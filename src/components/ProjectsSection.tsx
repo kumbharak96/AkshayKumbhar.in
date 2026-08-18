@@ -33,6 +33,7 @@ function ProjectCard({
   const handleMouseEnter = () => {
     if (videoRef.current) {
       videoRef.current.currentTime = 0;
+      videoRef.current.muted = false; // Enable audio on hover
       videoRef.current.play().catch((err) => {
         console.log("Hover video play failed:", err);
       });
@@ -42,6 +43,7 @@ function ProjectCard({
   const handleMouseLeave = () => {
     if (videoRef.current) {
       videoRef.current.pause();
+      videoRef.current.muted = true; // Reset mute state
     }
   };
 
@@ -56,10 +58,10 @@ function ProjectCard({
       onClick={() => onPlayVideo(project.videoUrl, project.name)}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="break-inside-avoid group glass-card rounded-card overflow-hidden cursor-pointer relative mb-6 flex flex-col"
+      className="group glass-card rounded-card overflow-hidden cursor-pointer relative flex flex-col w-full"
     >
       {/* Media Card Aspect ratio (9:16 for vertical ads) */}
-      <div className="relative aspect-[9/16] overflow-hidden">
+      <div className="relative aspect-[9/16] overflow-hidden bg-zinc-950">
         <Image
           src={project.thumbnail}
           alt={project.name}
@@ -67,14 +69,14 @@ function ProjectCard({
           className="object-cover group-hover:scale-105 transition-transform duration-500"
         />
         
-        {/* Autoplay Preview Video on hover */}
+        {/* Autoplay Preview Video on hover (starts unmuted) */}
         <video
           ref={videoRef}
           src={project.videoUrl}
           className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-          muted
           loop
           playsInline
+          muted
         />
 
         {/* Duration Overlay */}
@@ -82,9 +84,9 @@ function ProjectCard({
           {project.duration} Min
         </div>
 
-        {/* Play Button Overlay */}
-        <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/45 transition-colors duration-300">
-          <div className="w-12 h-12 rounded-full flex items-center justify-center bg-white/10 group-hover:bg-primary-purple backdrop-blur-md border border-white/20 group-hover:border-primary-purple shadow-lg scale-90 group-hover:scale-100 opacity-0 group-hover:opacity-100 transition-all duration-300">
+        {/* Play Button Overlay (hides on hover) */}
+        <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-transparent transition-all duration-300">
+          <div className="w-12 h-12 rounded-full flex items-center justify-center bg-white/10 backdrop-blur-md border border-white/20 shadow-lg scale-100 group-hover:scale-90 opacity-100 group-hover:opacity-0 transition-all duration-300">
             <Play size={18} fill="white" className="text-white ml-0.5" />
           </div>
         </div>
@@ -234,7 +236,7 @@ export default function ProjectsSection({ onPlayVideo }: ProjectsSectionProps) {
       {filteredProjects.length > 0 ? (
         <motion.div 
           layout
-          className="columns-1 md:columns-2 xl:columns-3 gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project) => (
