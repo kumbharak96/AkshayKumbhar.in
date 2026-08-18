@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { Volume2, VolumeX } from "lucide-react";
+import { getAssetPath } from "@/utils/assets";
 
 interface HeroSectionProps {
   onWatchShowreel: () => void;
@@ -104,7 +105,7 @@ export default function HeroSection({ onWatchShowreel, onViewProjects }: HeroSec
       <video
         ref={videoRef}
         className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none z-0"
-        src="/assets/back-video.mp4"
+        src={getAssetPath("/assets/back-video.mp4")}
         autoPlay
         loop
         muted={isMuted}

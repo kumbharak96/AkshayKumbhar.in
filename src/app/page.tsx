@@ -21,6 +21,7 @@ import AboutSection from "@/components/AboutSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import VideoModal from "@/components/VideoModal";
+import { getAssetPath } from "@/utils/assets";
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState("home");
@@ -150,7 +151,7 @@ export default function Home() {
         
         {/* Section 1: Hero */}
         <HeroSection 
-          onWatchShowreel={() => handleOpenVideo("/assets/Video1.mp4", "Akshay Kumbhar - Editing Showreel")}
+          onWatchShowreel={() => handleOpenVideo(getAssetPath("/assets/Video1.mp4"), "Akshay Kumbhar - Editing Showreel")}
           onViewProjects={() => handleNavigate("projects")}
         />
 

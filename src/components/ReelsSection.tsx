@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Smartphone, Heart, MessageCircle, Play } from "lucide-react";
+import { getAssetPath } from "@/utils/assets";
 
 interface ReelItem {
   id: string;
@@ -21,28 +22,28 @@ export default function ReelsSection({ onPlayReel }: ReelsSectionProps) {
     {
       id: "reel-1",
       title: "GUDUP Juice Launch AI Commercial",
-      videoUrl: "/assets/Video1.mp4",
+      videoUrl: getAssetPath("/assets/Video1.mp4"),
       likes: "24.5K",
       comments: "1.2K"
     },
     {
       id: "reel-2",
       title: "Sunburn Festival Energy Edit",
-      videoUrl: "/assets/back-video.mp4",
+      videoUrl: getAssetPath("/assets/back-video.mp4"),
       likes: "18.3K",
       comments: "840"
     },
     {
       id: "reel-3",
       title: "Vogue Catalog Fall Transition",
-      videoUrl: "/assets/Video1.mp4",
+      videoUrl: getAssetPath("/assets/Video1.mp4"),
       likes: "32.1K",
       comments: "2.4K"
     },
     {
       id: "reel-4",
       title: "Iceland Glacier Run Cinematic",
-      videoUrl: "/assets/back-video.mp4",
+      videoUrl: getAssetPath("/assets/back-video.mp4"),
       likes: "45.0K",
       comments: "3.1K"
     }

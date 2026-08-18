@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Play, Eye, Clock, ListVideo } from "lucide-react";
 import { YoutubeIcon } from "@/components/SocialIcons";
 import Image from "next/image";
+import { getAssetPath } from "@/utils/assets";
 
 interface VideoPlaylistItem {
   id: string;
@@ -27,8 +28,8 @@ export default function YoutubeSection({ onPlayVideo }: YoutubeSectionProps) {
       title: "Advanced After Effects Motion Tracking & Compositing Guide",
       duration: "14:20",
       views: "185K views",
-      thumbnail: "/assets/dataset-cover.jpg",
-      videoUrl: "/assets/Video1.mp4",
+      thumbnail: getAssetPath("/assets/dataset-cover.jpg"),
+      videoUrl: getAssetPath("/assets/Video1.mp4"),
       desc: "Detailed workflow showcasing 3D tracking camera rigs, green screen replacement, and realistic shadows."
     },
     {
@@ -36,8 +37,8 @@ export default function YoutubeSection({ onPlayVideo }: YoutubeSectionProps) {
       title: "Color Space Setup & Cinematic Tone Mapping in DaVinci Resolve",
       duration: "18:05",
       views: "320K views",
-      thumbnail: "/assets/profile background.jpg",
-      videoUrl: "/assets/back-video.mp4",
+      thumbnail: getAssetPath("/assets/profile background.jpg"),
+      videoUrl: getAssetPath("/assets/back-video.mp4"),
       desc: "Masterclass detailing DaVinci Color Managed setups, matching Log profiles, and applying stylized custom grades."
     },
     {
@@ -45,8 +46,8 @@ export default function YoutubeSection({ onPlayVideo }: YoutubeSectionProps) {
       title: "AI Commercial Production Workflow: Sora + Kling + Gen-3",
       duration: "10:15",
       views: "95K views",
-      thumbnail: "/assets/AMAZON-1200x537-1.png",
-      videoUrl: "/assets/Video1.mp4",
+      thumbnail: getAssetPath("/assets/AMAZON-1200x537-1.png"),
+      videoUrl: getAssetPath("/assets/Video1.mp4"),
       desc: "Walkthrough of script writing in ChatGPT, synthesizing hyper-realistic shots, and pacing the edit."
     },
     {
@@ -54,8 +55,8 @@ export default function YoutubeSection({ onPlayVideo }: YoutubeSectionProps) {
       title: "High-Retention Instagram Reels Editing Tutorial",
       duration: "12:40",
       views: "142K views",
-      thumbnail: "/assets/instagram-logo.jpg",
-      videoUrl: "/assets/back-video.mp4",
+      thumbnail: getAssetPath("/assets/instagram-logo.jpg"),
+      videoUrl: getAssetPath("/assets/back-video.mp4"),
       desc: "How to edit engaging shorts utilizing speed ramps, zoom transitions, sound effects, and auto-captioning tools."
     }
   ];

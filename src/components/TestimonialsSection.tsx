@@ -4,6 +4,7 @@ import React, { useCallback } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { Star, ChevronLeft, ChevronRight, MessageSquareQuote } from "lucide-react";
 import Image from "next/image";
+import { getAssetPath } from "@/utils/assets";
 
 interface Testimonial {
   name: string;
@@ -32,7 +33,7 @@ export default function TestimonialsSection() {
       company: "Velo Brands",
       review: "Akshay did an incredible job on our product promos. His AI ads workflow is incredibly fast and the pacing is perfect. Our campaigns saw a 3x lift in CTR.",
       rating: 5,
-      avatar: "/assets/profile background.jpg" // placeholder fallback
+      avatar: getAssetPath("/assets/profile background.jpg") // placeholder fallback
     },
     {
       name: "Sarah Connor",
@@ -40,7 +41,7 @@ export default function TestimonialsSection() {
       company: "Lift Gyms",
       review: "His editing style has helped our Instagram channel double in organic views. The transition reels are extremely engaging and audience retention has spiked.",
       rating: 5,
-      avatar: "/assets/profile background.jpg"
+      avatar: getAssetPath("/assets/profile background.jpg")
     },
     {
       name: "David Miller",
@@ -48,7 +49,7 @@ export default function TestimonialsSection() {
       company: "GUDUP Drinks",
       review: "Akshay's edit for GUDUP was an absolute hit. The color grading matches the premium luxury feel of our brand. Will work with him on all future launches.",
       rating: 5,
-      avatar: "/assets/profile background.jpg"
+      avatar: getAssetPath("/assets/profile background.jpg")
     },
     {
       name: "Jessica Vance",
@@ -56,7 +57,7 @@ export default function TestimonialsSection() {
       company: "Apex Real Estate",
       review: "We got a stunning, professional cinematic walkthrough of our luxury listings. The stabilizing and call-out motion graphics labels are absolutely perfect.",
       rating: 5,
-      avatar: "/assets/profile background.jpg"
+      avatar: getAssetPath("/assets/profile background.jpg")
     }
   ];
 

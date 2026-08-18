@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import { getAssetPath } from "@/utils/assets";
 import { 
   Home, 
   Play, 
@@ -84,7 +85,7 @@ export default function Sidebar({ activeSection, onNavigate, isOpen, onClose, is
             <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-primary-purple via-blue-accent to-pink-accent animate-spin-slow opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <div className="relative w-full h-full rounded-full overflow-hidden bg-secondary-bg">
               <Image
-                src="/assets/aaaa.gif"
+                src={getAssetPath("/assets/aaaa.gif")}
                 alt="Akshay Kumbhar"
                 fill
                 className="object-cover group-hover:scale-110 transition-transform duration-500"

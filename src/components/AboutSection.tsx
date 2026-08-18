@@ -4,6 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { User, Eye, Compass, Heart } from "lucide-react";
+import { getAssetPath } from "@/utils/assets";
 
 export default function AboutSection() {
   return (
@@ -36,7 +37,7 @@ export default function AboutSection() {
           >
             <div className="relative w-full h-full rounded-card overflow-hidden">
               <Image
-                src="/assets/1674758970005.jpeg"
+                src={getAssetPath("/assets/profile.jpg")}
                 alt="Akshay Kumbhar Professional Photo"
                 fill
                 className="object-cover group-hover:scale-105 transition-transform duration-700"

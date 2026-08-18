@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Play, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
+import { getAssetPath } from "@/utils/assets";
 
 interface Project {
   id: string;
@@ -45,8 +46,8 @@ export default function ProjectsSection({ onPlayVideo }: ProjectsSectionProps) {
       category: "AI Ads",
       duration: "00:45",
       description: "AI-generated commercial advertising healthy, refreshing juices with custom graphics.",
-      thumbnail: "/assets/dataset-cover.jpg",
-      videoUrl: "/assets/Video1.mp4",
+      thumbnail: getAssetPath("/assets/dataset-cover.jpg"),
+      videoUrl: getAssetPath("/assets/Video1.mp4"),
     },
     {
       id: "gym-promo",
@@ -55,8 +56,8 @@ export default function ProjectsSection({ onPlayVideo }: ProjectsSectionProps) {
       category: "Gym",
       duration: "01:00",
       description: "High-octane gym promo featuring cinematic action shots and motivational music overlay.",
-      thumbnail: "/assets/profile background.jpg",
-      videoUrl: "/assets/Video1.mp4",
+      thumbnail: getAssetPath("/assets/profile background.jpg"),
+      videoUrl: getAssetPath("/assets/Video1.mp4"),
     },
     {
       id: "restaurant-commercial",
@@ -65,8 +66,8 @@ export default function ProjectsSection({ onPlayVideo }: ProjectsSectionProps) {
       category: "Food",
       duration: "00:30",
       description: "Mouth-watering closeups of signature dishes, chef cooking sequences, and ambient fine dining.",
-      thumbnail: "/assets/AMAZON-1200x537-1.png",
-      videoUrl: "/assets/back-video.mp4",
+      thumbnail: getAssetPath("/assets/AMAZON-1200x537-1.png"),
+      videoUrl: getAssetPath("/assets/back-video.mp4"),
     },
     {
       id: "school-promotion",
@@ -75,8 +76,8 @@ export default function ProjectsSection({ onPlayVideo }: ProjectsSectionProps) {
       category: "Education",
       duration: "02:15",
       description: "Warm, promotional walkthrough highlighting academics, student activities, and modern sports fields.",
-      thumbnail: "/assets/Linkedin-Marketing-Guide-no-text.jpg",
-      videoUrl: "/assets/Video1.mp4",
+      thumbnail: getAssetPath("/assets/Linkedin-Marketing-Guide-no-text.jpg"),
+      videoUrl: getAssetPath("/assets/Video1.mp4"),
     },
     {
       id: "corporate-video",
@@ -85,8 +86,8 @@ export default function ProjectsSection({ onPlayVideo }: ProjectsSectionProps) {
       category: "Commercial",
       duration: "03:00",
       description: "Corporate summary detailing the company's mission, employee culture, and custom software dashboard.",
-      thumbnail: "/assets/dataset-cover.jpg",
-      videoUrl: "/assets/back-video.mp4",
+      thumbnail: getAssetPath("/assets/dataset-cover.jpg"),
+      videoUrl: getAssetPath("/assets/back-video.mp4"),
     },
     {
       id: "travel-film",
@@ -95,8 +96,8 @@ export default function ProjectsSection({ onPlayVideo }: ProjectsSectionProps) {
       category: "Travel",
       duration: "02:30",
       description: "Cinematic scenery sweep of active volcanoes, glacier rivers, and towering mountain summits.",
-      thumbnail: "/assets/profile background.jpg",
-      videoUrl: "/assets/back-video.mp4",
+      thumbnail: getAssetPath("/assets/profile background.jpg"),
+      videoUrl: getAssetPath("/assets/back-video.mp4"),
     },
     {
       id: "real-estate",
@@ -105,8 +106,8 @@ export default function ProjectsSection({ onPlayVideo }: ProjectsSectionProps) {
       category: "Real Estate",
       duration: "01:45",
       description: "Luxury villa walkthrough focusing on architectural details, lighting layouts, and stabilization shots.",
-      thumbnail: "/assets/instagram-logo.jpg",
-      videoUrl: "/assets/Video1.mp4",
+      thumbnail: getAssetPath("/assets/instagram-logo.jpg"),
+      videoUrl: getAssetPath("/assets/Video1.mp4"),
     },
     {
       id: "medical-ad",
@@ -115,8 +116,8 @@ export default function ProjectsSection({ onPlayVideo }: ProjectsSectionProps) {
       category: "Healthcare",
       duration: "01:00",
       description: "Reassuring medical commercial showcasing state-of-the-art diagnostic facilities and caring pediatric staff.",
-      thumbnail: "/assets/AMAZON-1200x537-1.png",
-      videoUrl: "/assets/Video1.mp4",
+      thumbnail: getAssetPath("/assets/AMAZON-1200x537-1.png"),
+      videoUrl: getAssetPath("/assets/Video1.mp4"),
     },
     {
       id: "festival-reel",
@@ -125,8 +126,8 @@ export default function ProjectsSection({ onPlayVideo }: ProjectsSectionProps) {
       category: "Reels",
       duration: "00:30",
       description: "Fast-cut energy-heavy reel covering mainstage DJs, audience crowds, and light show highlights.",
-      thumbnail: "/assets/instagram-logo.jpg",
-      videoUrl: "/assets/back-video.mp4",
+      thumbnail: getAssetPath("/assets/instagram-logo.jpg"),
+      videoUrl: getAssetPath("/assets/back-video.mp4"),
     },
     {
       id: "fashion-reel",
@@ -135,8 +136,8 @@ export default function ProjectsSection({ onPlayVideo }: ProjectsSectionProps) {
       category: "Reels",
       duration: "00:15",
       description: "Modern fashion outfit transitions utilizing speed ramp zooms and beat-matched audio cuts.",
-      thumbnail: "/assets/dataset-cover.jpg",
-      videoUrl: "/assets/back-video.mp4",
+      thumbnail: getAssetPath("/assets/dataset-cover.jpg"),
+      videoUrl: getAssetPath("/assets/back-video.mp4"),
     },
     {
       id: "fashion-commercial",
@@ -145,8 +146,8 @@ export default function ProjectsSection({ onPlayVideo }: ProjectsSectionProps) {
       category: "Cinematic",
       duration: "01:15",
       description: "Aesthetic cinematic commercial detailing the upcoming seasonal clothing line and catalog.",
-      thumbnail: "/assets/profile background.jpg",
-      videoUrl: "/assets/Video1.mp4",
+      thumbnail: getAssetPath("/assets/profile background.jpg"),
+      videoUrl: getAssetPath("/assets/Video1.mp4"),
     },
   ];
 
