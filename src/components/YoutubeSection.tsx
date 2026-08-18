@@ -82,7 +82,7 @@ export default function YoutubeSection({ onPlayVideo }: YoutubeSectionProps) {
         <div className="lg:col-span-7 flex flex-col gap-5">
           <div
             onClick={() => onPlayVideo(activeItem.videoUrl, activeItem.title)}
-            className="group relative aspect-video rounded-card overflow-hidden border border-white/10 bg-zinc-950 shadow-xl cursor-pointer"
+            className="group relative aspect-video rounded-card overflow-hidden border border-white/10 bg-secondary-bg shadow-xl cursor-pointer"
           >
             {/* Background Thumbnail */}
             <Image

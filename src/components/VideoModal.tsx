@@ -34,18 +34,14 @@ export default function VideoModal({ isOpen, videoUrl, onClose, title }: VideoMo
         onClick={onClose}
       />
       <div className="relative w-full max-w-5xl rounded-card overflow-hidden bg-card-bg border border-white/10 shadow-2xl z-10 scale-95 animate-in fade-in zoom-in-95 duration-200">
-        {/* Modal Header */}
-        <div className="flex items-center justify-between p-4 bg-zinc-950/50 border-b border-white/5">
-          <h3 className="font-semibold text-white truncate max-w-[80%]">
-            {title || "Project Showcase"}
-          </h3>
-          <button
-            onClick={onClose}
-            className="p-1 rounded-full hover:bg-white/5 text-zinc-400 hover:text-white transition-colors cursor-pointer"
-          >
-            <X size={20} />
-          </button>
-        </div>
+        {/* Floating Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 z-50 p-2 rounded-full bg-black/60 hover:bg-black/85 text-white/80 hover:text-white hover:scale-105 border border-white/10 hover:border-white/20 transition-all cursor-pointer shadow-lg backdrop-blur-sm"
+          aria-label="Close video"
+        >
+          <X size={20} />
+        </button>
 
         {/* Video Player Box */}
         <div className="relative aspect-video bg-black flex items-center justify-center">

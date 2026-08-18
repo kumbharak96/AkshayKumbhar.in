@@ -6,11 +6,17 @@ import { Menu, ArrowUpRight, Download } from "lucide-react";
 interface NavbarProps {
   onMenuToggle: () => void;
   onNavigate: (sectionId: string) => void;
+  isVisible?: boolean;
 }
 
-export default function Navbar({ onMenuToggle, onNavigate }: NavbarProps) {
+export default function Navbar({ onMenuToggle, onNavigate, isVisible = true }: NavbarProps) {
   return (
-    <header className="sticky top-0 right-0 z-30 w-full h-20 bg-background/60 backdrop-blur-md border-b border-white/5 flex items-center justify-between px-6 lg:px-12 transition-all duration-300">
+    <header className={`
+      sticky top-0 right-0 z-30 w-full h-20 bg-background/60 backdrop-blur-md border-b border-white/5 
+      flex items-center justify-between px-6 lg:px-12 
+      transition-all duration-500 ease-in-out
+      ${isVisible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0 pointer-events-none"}
+    `}>
       {/* Mobile Toggle & Logo */}
       <div className="flex items-center gap-4">
         <button

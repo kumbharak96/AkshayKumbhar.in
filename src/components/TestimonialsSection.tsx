@@ -122,7 +122,7 @@ export default function TestimonialsSection() {
                 {/* Profile Meta row */}
                 <div className="flex items-center gap-3.5 border-t border-white/5 pt-4">
                   {/* Small Avatar circle */}
-                  <div className="relative w-10 h-10 rounded-full overflow-hidden border border-white/10 bg-zinc-950">
+                  <div className="relative w-10 h-10 rounded-full overflow-hidden border border-white/10 bg-secondary-bg">
                     <Image
                       src={test.avatar}
                       alt={test.name}

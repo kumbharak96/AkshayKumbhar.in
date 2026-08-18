@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #09090B;
-  --color-secondary-bg: #111118;
-  --color-card-bg: #17171F;
+  --color-background: #18181B;
+  --color-secondary-bg: #202024;
+  --color-card-bg: #27272A;
   --color-primary-purple: #7C3AED;
   --color-secondary-purple: #A855F7;
   --color-blue-accent: #3B82F6;
@@ -26,7 +26,7 @@
 }
 
 :root {
-  --background: #09090B;
+  --background: #18181B;
   --foreground: #ffffff;
 }
 
@@ -66,7 +66,7 @@ html.lenis body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #09090B;
+  background: #18181B;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -80,14 +80,14 @@ html.lenis body {
 
 /* Glassmorphism Classes */
 .glass-panel {
-  background: rgba(23, 23, 31, 0.4);
+  background: rgba(39, 39, 42, 0.4);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .glass-card {
-  background: rgba(23, 23, 31, 0.6);
+  background: rgba(39, 39, 42, 0.6);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.06);
@@ -107,4 +107,18 @@ html.lenis body {
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Sound equalizer animation keyframes */
+@keyframes equalizer-1 {
+  0%, 100% { height: 4px; }
+  50% { height: 12px; }
+}
+@keyframes equalizer-2 {
+  0%, 100% { height: 10px; }
+  50% { height: 4px; }
+}
+@keyframes equalizer-3 {
+  0%, 100% { height: 6px; }
+  50% { height: 14px; }
 }

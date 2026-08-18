@@ -20,7 +20,7 @@ export default function ClientLogos() {
   const marqueeItems = [...brands, ...brands, ...brands];
 
   return (
-    <section id="marquee" className="py-6 border-y border-white/5 bg-zinc-950/20 overflow-hidden w-full relative">
+    <section id="marquee" className="py-6 border-y border-white/5 bg-secondary-bg/20 overflow-hidden w-full relative">
       {/* Side fades */}
       <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
       <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />

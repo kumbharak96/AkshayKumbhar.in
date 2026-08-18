@@ -21,9 +21,10 @@ interface SidebarProps {
   onNavigate: (sectionId: string) => void;
   isOpen: boolean;
   onClose: () => void;
+  isVisible?: boolean;
 }
 
-export default function Sidebar({ activeSection, onNavigate, isOpen, onClose }: SidebarProps) {
+export default function Sidebar({ activeSection, onNavigate, isOpen, onClose, isVisible = true }: SidebarProps) {
   const navItems = [
     { id: "home", label: "Home", icon: Home },
     { id: "showreel", label: "Showreel", icon: Play },
@@ -66,8 +67,8 @@ export default function Sidebar({ activeSection, onNavigate, isOpen, onClose }: 
         fixed top-0 left-0 bottom-0 z-50 
         w-[280px] bg-background lg:bg-background/40 border-r border-white/5 lg:backdrop-blur-md
         flex flex-col p-6 overflow-y-auto no-scrollbar
-        transition-transform duration-300 lg:translate-x-0
-        ${isOpen ? "translate-x-0" : "-translate-x-full"}
+        transition-all duration-500 ease-in-out
+        ${isOpen ? "translate-x-0" : isVisible ? "lg:translate-x-0 -translate-x-full" : "-translate-x-full"}
       `}>
         {/* Mobile close button */}
         <button

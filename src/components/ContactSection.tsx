@@ -44,7 +44,7 @@ export default function ContactSection() {
   return (
     <section id="contact" className="py-8 lg:py-16 flex flex-col gap-10 scroll-mt-24">
       {/* Container Card */}
-      <div className="relative p-8 sm:p-12 rounded-card overflow-hidden border border-white/5 bg-zinc-950/40 shadow-2xl flex flex-col gap-10">
+      <div className="relative p-8 sm:p-12 rounded-card overflow-hidden border border-white/5 bg-secondary-bg/40 shadow-2xl flex flex-col gap-10">
         
         {/* Background Glowing Lights */}
         <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-primary-purple/10 blur-[100px] -z-10" />
@@ -110,7 +110,7 @@ export default function ContactSection() {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="Enter name"
-                    className="py-3 px-4 rounded-xl bg-zinc-950 border border-white/5 text-sm text-white focus:outline-none focus:border-primary-purple transition-colors"
+                    className="py-3 px-4 rounded-xl bg-secondary-bg border border-white/5 text-sm text-white focus:outline-none focus:border-primary-purple transition-colors"
                   />
                 </div>
                 <div className="flex flex-col gap-2">
@@ -122,7 +122,7 @@ export default function ContactSection() {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="Enter email"
-                    className="py-3 px-4 rounded-xl bg-zinc-950 border border-white/5 text-sm text-white focus:outline-none focus:border-primary-purple transition-colors"
+                    className="py-3 px-4 rounded-xl bg-secondary-bg border border-white/5 text-sm text-white focus:outline-none focus:border-primary-purple transition-colors"
                   />
                 </div>
               </div>
@@ -137,7 +137,7 @@ export default function ContactSection() {
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   placeholder="Tell me about your project..."
-                  className="py-3 px-4 rounded-xl bg-zinc-950 border border-white/5 text-sm text-white focus:outline-none focus:border-primary-purple transition-colors resize-none"
+                  className="py-3 px-4 rounded-xl bg-secondary-bg border border-white/5 text-sm text-white focus:outline-none focus:border-primary-purple transition-colors resize-none"
                 />
               </div>
 

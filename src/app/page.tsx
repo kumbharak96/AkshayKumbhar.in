@@ -5,7 +5,6 @@ import Lenis from "lenis";
 
 // Import Components
 import Sidebar from "@/components/Sidebar";
-import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import CategoriesSection from "@/components/CategoriesSection";
@@ -33,6 +32,24 @@ export default function Home() {
     url: "",
     title: ""
   });
+
+  // Sidebar show-hide on scroll Y
+  const [showSidebar, setShowSidebar] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setShowSidebar(true);
+      } else {
+        setShowSidebar(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   // Lenis Smooth Scroll Setup
   useEffect(() => {
@@ -125,24 +142,20 @@ export default function Home() {
         onNavigate={handleNavigate}
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
+        isVisible={showSidebar}
       />
 
       {/* Main Content Area */}
-      <div className="flex-1 lg:ml-[280px] flex flex-col min-w-0">
+      <div className={`flex-1 flex flex-col min-w-0 transition-[margin] duration-500 ease-in-out ${showSidebar ? "lg:ml-[280px]" : "lg:ml-0"}`}>
         
-        {/* Top Navbar */}
-        <Navbar
-          onMenuToggle={() => setIsSidebarOpen(!isSidebarOpen)}
-          onNavigate={handleNavigate}
+        {/* Section 1: Hero */}
+        <HeroSection 
+          onWatchShowreel={() => handleOpenVideo("/assets/Video1.mp4", "Akshay Kumbhar - Editing Showreel")}
+          onViewProjects={() => handleNavigate("projects")}
         />
 
         {/* Scroll Body */}
         <main className="flex-1 px-6 lg:px-12 py-8 flex flex-col gap-12 sm:gap-20 max-w-7xl w-full mx-auto box-border">
-          {/* Section 1: Hero */}
-          <HeroSection 
-            onWatchShowreel={() => handleOpenVideo("/assets/Video1.mp4", "Akshay Kumbhar - Editing Showreel")}
-            onViewProjects={() => handleNavigate("projects")}
-          />
           
           {/* Section 2: Projects Grid */}
           <ProjectsSection onPlayVideo={handleOpenVideo} />

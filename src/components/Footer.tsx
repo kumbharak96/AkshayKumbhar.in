@@ -30,7 +30,7 @@ export default function Footer({ onNavigate }: FooterProps) {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-auto py-12 px-6 lg:px-12 bg-zinc-950 border-t border-white/5 flex flex-col gap-8 w-full">
+    <footer className="mt-auto py-12 px-6 lg:px-12 bg-secondary-bg border-t border-white/5 flex flex-col gap-8 w-full">
       {/* Top row */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
         

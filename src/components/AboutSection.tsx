@@ -32,7 +32,7 @@ export default function AboutSection() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative w-full aspect-[4/5] max-w-[340px] rounded-card overflow-hidden border border-white/10 bg-zinc-950 p-1.5 shadow-2xl group"
+            className="relative w-full aspect-[4/5] max-w-[340px] rounded-card overflow-hidden border border-white/10 bg-secondary-bg p-1.5 shadow-2xl group"
           >
             <div className="relative w-full h-full rounded-card overflow-hidden">
               <Image
