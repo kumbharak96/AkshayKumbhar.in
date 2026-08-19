@@ -81,15 +81,18 @@ export default function Sidebar({ activeSection, onNavigate, isOpen, onClose, is
 
         {/* Profile info block */}
         <div className="flex flex-col items-center text-center mt-4 mb-8">
-          <div className="relative w-28 h-28 rounded-full overflow-hidden border-2 border-primary-purple/30 p-1 mb-4 shadow-lg group">
-            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-primary-purple via-blue-accent to-pink-accent animate-spin-slow opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            <div className="relative w-full h-full rounded-full overflow-hidden bg-secondary-bg">
+          <div className="relative w-32 h-32 rounded-full p-1 mb-4 group transition-all duration-500 hover:[box-shadow:0_0_25px_rgba(124,58,237,0.75)]">
+            {/* Border ring */}
+            <div className="absolute inset-0 rounded-full border-2 border-primary-purple/35 group-hover:border-primary-purple/60 transition-all duration-500" />
+            {/* Gradient spinner ring */}
+            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-primary-purple via-blue-accent to-pink-accent animate-spin-slow opacity-0 group-hover:opacity-100 transition-opacity duration-500 p-[2px]" />
+            {/* Image container */}
+            <div className="relative w-full h-full rounded-full overflow-hidden bg-secondary-bg z-10">
               <Image
-                src={getAssetPath("/assets/aaaa.gif")}
+                src={getAssetPath("/assets/Profile-pic.png")}
                 alt="Akshay Kumbhar"
                 fill
-                className="object-cover group-hover:scale-110 transition-transform duration-500"
-                unoptimized
+                className="object-cover group-hover:scale-115 transition-transform duration-700 ease-in-out"
               />
             </div>
           </div>
@@ -97,7 +100,7 @@ export default function Sidebar({ activeSection, onNavigate, isOpen, onClose, is
             Akshay Kumbhar
           </h2>
           <p className="text-xs text-zinc-400 font-medium mt-1 uppercase tracking-widest bg-zinc-900 px-3 py-1 rounded-full border border-white/5">
-            Video Editor & Creator
+            Video Editor & Ai Creator
           </p>
         </div>
 
@@ -111,14 +114,20 @@ export default function Sidebar({ activeSection, onNavigate, isOpen, onClose, is
                 key={item.id}
                 onClick={() => onNavigate(item.id)}
                 className={`
-                  flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-300 cursor-pointer
+                  flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-300 cursor-pointer group
                   ${isActive 
-                    ? "bg-primary-purple/10 border-l-2 border-primary-purple text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]" 
-                    : "text-zinc-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent"
+                    ? "bg-primary-purple/10 border-l-2 border-primary-purple text-white shadow-[0_0_15px_rgba(124,58,237,0.3)] [text-shadow:0_0_8px_rgba(124,58,237,0.5)]" 
+                    : "text-zinc-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent hover:[text-shadow:0_0_8px_rgba(255,255,255,0.55)]"
                   }
                 `}
               >
-                <Icon size={18} className={isActive ? "text-primary-purple" : "text-zinc-500 group-hover:text-white"} />
+                <Icon 
+                  size={18} 
+                  className={isActive 
+                    ? "text-primary-purple [filter:drop-shadow(0_0_5px_rgba(124,58,237,0.5))]" 
+                    : "text-zinc-500 group-hover:text-white group-hover:[filter:drop-shadow(0_0_5px_rgba(255,255,255,0.5))]"
+                  } 
+                />
                 {item.label}
               </button>
             );

@@ -37,7 +37,7 @@ export default function AboutSection() {
           >
             <div className="relative w-full h-full rounded-card overflow-hidden">
               <Image
-                src={getAssetPath("/assets/profile.jpg")}
+                src={getAssetPath("/assets/Vertical-profile.png")}
                 alt="Akshay Kumbhar Professional Photo"
                 fill
                 className="object-cover group-hover:scale-105 transition-transform duration-700"
