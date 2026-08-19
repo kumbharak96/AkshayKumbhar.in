@@ -29,6 +29,7 @@ function ProjectCard({
   onPlayVideo: (videoUrl: string, title: string) => void; 
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [videoDuration, setVideoDuration] = useState<number | null>(null);
 
   const handleMouseEnter = () => {
     if (videoRef.current) {
@@ -47,6 +48,18 @@ function ProjectCard({
     }
   };
 
+  const handleLoadedMetadata = () => {
+    if (videoRef.current) {
+      setVideoDuration(videoRef.current.duration);
+    }
+  };
+
+  const formatDuration = (sec: number) => {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return `${m}:${s < 10 ? "0" : ""}${s}`;
+  };
+
   return (
     <motion.div
       layout
@@ -62,30 +75,25 @@ function ProjectCard({
     >
       {/* Media Card Aspect ratio (9:16 for vertical ads) */}
       <div className="relative aspect-[9/16] overflow-hidden bg-zinc-950">
-        <Image
-          src={project.thumbnail}
-          alt={project.name}
-          fill
-          className="object-cover group-hover:scale-105 transition-transform duration-500"
-        />
-        
-        {/* Autoplay Preview Video on hover (starts unmuted) */}
+        {/* Preview Video, showing poster when not playing, fallback to first-frame if thumbnail missing */}
         <video
           ref={videoRef}
           src={project.videoUrl}
-          className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+          poster={project.thumbnail}
+          onLoadedMetadata={handleLoadedMetadata}
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none group-hover:scale-105 transition-transform duration-700 bg-zinc-950"
           loop
           playsInline
           muted
         />
 
         {/* Duration Overlay */}
-        <div className="absolute top-3 right-3 px-2 py-0.5 rounded bg-black/75 border border-white/5 text-[10px] font-bold text-zinc-300">
-          {project.duration} Min
+        <div className="absolute top-3 right-3 px-2 py-0.5 rounded bg-black/75 border border-white/5 text-[10px] font-bold text-zinc-300 z-10">
+          {videoDuration !== null ? formatDuration(videoDuration) : project.duration}
         </div>
 
         {/* Play Button Overlay (hides on hover) */}
-        <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-transparent transition-all duration-300">
+        <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-transparent transition-all duration-300 z-10">
           <div className="w-12 h-12 rounded-full flex items-center justify-center bg-white/10 backdrop-blur-md border border-white/20 shadow-lg scale-100 group-hover:scale-90 opacity-100 group-hover:opacity-0 transition-all duration-300">
             <Play size={18} fill="white" className="text-white ml-0.5" />
           </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { Volume2, VolumeX } from "lucide-react";
+import { Volume2, VolumeX, Play } from "lucide-react";
 import { getAssetPath } from "@/utils/assets";
 
 interface HeroSectionProps {
@@ -12,6 +12,7 @@ interface HeroSectionProps {
 export default function HeroSection({ onWatchShowreel, onViewProjects }: HeroSectionProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isMuted, setIsMuted] = useState(true);
+  const [hasEnded, setHasEnded] = useState(false);
 
   // Sync state with video element
   useEffect(() => {
@@ -50,13 +51,13 @@ export default function HeroSection({ onWatchShowreel, onViewProjects }: HeroSec
       const video = videoRef.current;
       if (!video) return;
 
-      // Pause when scrolled down, play when scrolled back up
+      // Pause when scrolled down, play when scrolled back up (if not ended)
       if (window.scrollY > 50) {
         if (!video.paused) {
           video.pause();
         }
       } else {
-        if (video.paused) {
+        if (video.paused && !video.ended) {
           video.play().catch((err) => {
             console.log("Autoplay interrupted:", err);
           });
@@ -96,40 +97,67 @@ export default function HeroSection({ onWatchShowreel, onViewProjects }: HeroSec
     };
   }, []);
 
+  const handleVideoEnded = () => {
+    setHasEnded(true);
+  };
+
+  const handleReplayIntro = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const video = videoRef.current;
+    if (video) {
+      video.currentTime = 0;
+      video.play().catch((err) => console.log("Replay failed:", err));
+      setHasEnded(false);
+    }
+  };
+
   return (
     <section 
       id="home" 
       className="relative h-screen w-full overflow-hidden z-20 bg-black"
     >
-      {/* Background Loop Video with Audio enabled */}
+      {/* Background loop video playing once */}
       <video
         ref={videoRef}
         className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none z-0"
         src={getAssetPath("/assets/back-video.mp4")}
         autoPlay
-        loop
-        muted={isMuted}
         playsInline
+        muted={isMuted}
+        onEnded={handleVideoEnded}
       />
+
+      {/* Replay Overlay shown when the intro video ends */}
+      {hasEnded && (
+        <div className="absolute inset-0 flex items-center justify-center z-30 bg-black/45 backdrop-blur-[2px] transition-all duration-300">
+          <button
+            onClick={handleReplayIntro}
+            className="w-20 h-20 rounded-full flex items-center justify-center bg-primary-purple text-white shadow-[0_0_30px_rgba(124,58,237,0.85)] border border-primary-purple/50 hover:scale-105 hover:bg-primary-purple/95 active:scale-95 transition-all duration-300 cursor-pointer"
+            aria-label="Replay intro video"
+          >
+            <Play size={28} fill="white" className="ml-1 text-white animate-pulse" />
+          </button>
+        </div>
+      )}
 
       {/* Scroll Down Indicator */}
       <div 
         onClick={onViewProjects}
-        className="absolute bottom-8 left-8 z-30 flex items-center gap-3 cursor-pointer group text-zinc-400 hover:text-white transition-colors duration-300 select-none"
+        className="absolute bottom-8 left-8 z-30 flex items-center gap-4.5 cursor-pointer group text-white/95 hover:text-white transition-colors duration-300 select-none"
       >
-        <div className="flex items-center justify-center w-9 h-9 rounded-full border border-zinc-700 group-hover:border-primary-purple group-hover:bg-primary-purple/10 transition-all duration-300 shadow-md">
+        <div className="flex items-center justify-center w-12 h-12 rounded-full border border-white/40 bg-black/35 group-hover:border-white group-hover:bg-white/10 [box-shadow:0_0_10px_rgba(255,255,255,0.25)] group-hover:[box-shadow:0_0_20px_rgba(255,255,255,0.65)] transition-all duration-300 shadow-md">
           <svg 
-            className="w-4 h-4 text-zinc-400 group-hover:text-primary-purple transition-colors animate-bounce mt-0.5" 
+            className="w-5.5 h-5.5 text-white animate-bounce mt-0.5" 
             fill="none" 
             stroke="currentColor" 
-            strokeWidth="2.5" 
+            strokeWidth="3" 
             viewBox="0 0 24 24" 
             xmlns="http://www.w3.org/2000/svg"
           >
             <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>
         </div>
-        <span className="text-xs font-bold uppercase tracking-widest group-hover:translate-x-1 transition-transform duration-300">
+        <span className="text-sm md:text-base font-black uppercase tracking-wider text-white [text-shadow:0_0_10px_rgba(255,255,255,0.85)] group-hover:[text-shadow:0_0_20px_rgba(255,255,255,1)] group-hover:translate-x-1 transition-all duration-300">
           scroll down for website
         </span>
       </div>
