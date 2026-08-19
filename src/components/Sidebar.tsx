@@ -28,7 +28,6 @@ interface SidebarProps {
 export default function Sidebar({ activeSection, onNavigate, isOpen, onClose, isVisible = true }: SidebarProps) {
   const navItems = [
     { id: "home", label: "Home", icon: Home },
-    { id: "showreel", label: "Showreel", icon: Play },
     { id: "projects", label: "Projects", icon: Briefcase },
     { id: "services", label: "Services", icon: Wrench },
     { id: "why-me", label: "Why Choose Me", icon: HelpCircle },
@@ -99,9 +98,14 @@ export default function Sidebar({ activeSection, onNavigate, isOpen, onClose, is
           <h2 className="font-display text-xl font-black text-white tracking-wide">
             Akshay Kumbhar
           </h2>
-          <p className="text-xs text-zinc-400 font-medium mt-1 uppercase tracking-widest bg-zinc-900 px-3 py-1 rounded-full border border-white/5">
-            Video Editor & Ai Creator
-          </p>
+          <div className="relative p-[1.5px] rounded-full overflow-hidden mt-2 bg-zinc-950/50 shadow-[0_0_15px_rgba(124,58,237,0.45)] select-none">
+            {/* Rotating gradient border */}
+            <div className="absolute inset-[-1000%] animate-[spin_3s_linear_infinite] bg-[conic-gradient(from_0deg,transparent_20%,#7C3AED_40%,#EC4899_60%,transparent_80%)]" />
+            {/* Inner content box */}
+            <div className="relative bg-zinc-900 px-3.5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-white [text-shadow:0_0_8px_rgba(124,58,237,0.9),_0_0_2px_rgba(124,58,237,0.9)] flex items-center justify-center">
+              Video Editor & Ai Creator
+            </div>
+          </div>
         </div>
 
         {/* Navigation list */}

@@ -13,7 +13,6 @@ import WhyChooseMe from "@/components/WhyChooseMe";
 import ProcessSection from "@/components/ProcessSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import SkillsSection from "@/components/SkillsSection";
-import ReelsSection from "@/components/ReelsSection";
 import YoutubeSection from "@/components/YoutubeSection";
 import ClientLogos from "@/components/ClientLogos";
 import StatsSection from "@/components/StatsSection";
@@ -179,10 +178,7 @@ export default function Home() {
           {/* Section 8: Skills Progress */}
           <SkillsSection />
           
-          {/* Section 9: Vertical Reels sliders */}
-          <ReelsSection onPlayReel={handleOpenVideo} />
-          
-          {/* Section 10: Youtube Playlist videos */}
+          {/* Section 9: Youtube Playlist videos */}
           <YoutubeSection onPlayVideo={handleOpenVideo} />
           
           {/* Section 11: Clients Infinite Marquee */}
