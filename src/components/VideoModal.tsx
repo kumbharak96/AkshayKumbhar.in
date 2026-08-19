@@ -30,10 +30,12 @@ export default function VideoModal({ isOpen, videoUrl, onClose, title }: VideoMo
     };
   }, [isOpen]);
 
-  // Programmatic play on mount/url change
+  // Programmatic play on mount/url change - try unmuted first
   useEffect(() => {
     if (isOpen && videoUrl && videoRef.current) {
       const video = videoRef.current;
+      video.muted = false;
+      setIsMuted(false);
       
       const playPromise = video.play();
       if (playPromise !== undefined) {
