@@ -30,7 +30,7 @@ export default function ContactSection() {
     {
       label: "WhatsApp",
       icon: PhoneCall,
-      href: "https://wa.me/918459196896", // Mock WhatsApp link using user's number or standard format
+      href: "https://wa.me/918605537395", // Mock WhatsApp link using user's number or standard format
       color: "border-emerald-500/20 hover:border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/15 text-emerald-400 hover:text-emerald-350"
     },
     {
