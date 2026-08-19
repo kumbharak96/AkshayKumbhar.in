@@ -92,7 +92,7 @@ export default function Sidebar({ activeSection, onNavigate, isOpen, onClose, is
                 src={getAssetPath("/assets/Profile-pic.png")}
                 alt="Akshay Kumbhar"
                 fill
-                className="object-cover group-hover:scale-115 transition-transform duration-700 ease-in-out"
+                className="object-cover scale-[1.12] group-hover:scale-[1.22] transition-transform duration-700 ease-in-out"
               />
             </div>
           </div>
