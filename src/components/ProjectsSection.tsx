@@ -34,10 +34,16 @@ function ProjectCard({
   const handleMouseEnter = () => {
     if (videoRef.current) {
       videoRef.current.currentTime = 0;
-      videoRef.current.muted = true; // MUST be muted to autoplay preview on hover
+      videoRef.current.muted = false; // Attempt to play with audio on hover
       playPromiseRef.current = videoRef.current.play();
       playPromiseRef.current.catch((err) => {
-        console.log("Hover video play failed:", err);
+        console.log("Hover unmuted video play failed, falling back to muted:", err);
+        if (videoRef.current) {
+          videoRef.current.muted = true; // Fallback to muted to prevent block
+          playPromiseRef.current = videoRef.current.play().catch((mutedErr) => {
+            console.log("Hover muted video play failed:", mutedErr);
+          });
+        }
       });
     }
   };

@@ -31,10 +31,16 @@ function ReelCard({
 
   const handleMouseEnter = () => {
     if (videoRef.current) {
-      videoRef.current.muted = true;
+      videoRef.current.muted = false; // Attempt unmuted play on hover
       playPromiseRef.current = videoRef.current.play();
       playPromiseRef.current.catch((err) => {
-        console.log("Reel preview play failed:", err);
+        console.log("Hover unmuted reel play failed, falling back to muted:", err);
+        if (videoRef.current) {
+          videoRef.current.muted = true;
+          playPromiseRef.current = videoRef.current.play().catch((mutedErr) => {
+            console.log("Hover muted reel play failed:", mutedErr);
+          });
+        }
       });
     }
   };
