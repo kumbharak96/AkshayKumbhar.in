@@ -5,14 +5,15 @@ import { Volume2, VolumeX, Play } from "lucide-react";
 import { getAssetPath } from "@/utils/assets";
 
 interface HeroSectionProps {
-  onWatchShowreel: () => void;
+  onWatchShowreel?: () => void;
   onViewProjects: () => void;
 }
 
-export default function HeroSection({ onWatchShowreel, onViewProjects }: HeroSectionProps) {
+export default function HeroSection({ onViewProjects }: HeroSectionProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isMuted, setIsMuted] = useState(true);
   const [hasEnded, setHasEnded] = useState(false);
+  const playPromiseRef = useRef<Promise<void> | null>(null);
 
   // Sync state with video element
   useEffect(() => {
@@ -29,7 +30,8 @@ export default function HeroSection({ onWatchShowreel, onViewProjects }: HeroSec
 
     // Try playing unmuted first
     video.muted = false;
-    video.play()
+    playPromiseRef.current = video.play();
+    playPromiseRef.current
       .then(() => {
         // Success! Update state
         setIsMuted(false);
@@ -37,29 +39,51 @@ export default function HeroSection({ onWatchShowreel, onViewProjects }: HeroSec
       .catch((error) => {
         // Blocked by browser autoplay policy. Play muted.
         console.log("Unmuted autoplay blocked, playing muted instead:", error);
-        video.muted = true;
-        setIsMuted(true);
-        video.play().catch((err) => {
-          console.log("Muted autoplay failed:", err);
-        });
+        if (video) {
+          video.muted = true;
+          setIsMuted(true);
+          playPromiseRef.current = video.play();
+          playPromiseRef.current.catch((err) => {
+            console.log("Muted autoplay failed:", err);
+          });
+        }
       });
   }, []);
 
   // Scroll Play/Pause logic
   useEffect(() => {
+    let isPausedByScroll = false;
+
     const handleScroll = () => {
       const video = videoRef.current;
       if (!video) return;
 
-      // Pause when scrolled down, play when scrolled back up (if not ended)
-      if (window.scrollY > 50) {
-        if (!video.paused) {
+      const shouldPause = window.scrollY > 50;
+
+      if (shouldPause && !isPausedByScroll) {
+        isPausedByScroll = true;
+        // If there's a pending play promise, wait for it before pausing
+        if (playPromiseRef.current) {
+          playPromiseRef.current
+            .then(() => {
+              if (video && !video.paused) {
+                video.pause();
+              }
+            })
+            .catch(() => {
+              if (video && !video.paused) {
+                video.pause();
+              }
+            });
+        } else if (!video.paused) {
           video.pause();
         }
-      } else {
-        if (video.paused && !video.ended) {
-          video.play().catch((err) => {
-            console.log("Autoplay interrupted:", err);
+      } else if (!shouldPause && isPausedByScroll) {
+        isPausedByScroll = false;
+        if (!video.ended) {
+          playPromiseRef.current = video.play();
+          playPromiseRef.current.catch((err) => {
+            console.log("Autoplay interrupted or failed:", err);
           });
         }
       }

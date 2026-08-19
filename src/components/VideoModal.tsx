@@ -12,18 +12,16 @@ interface VideoModalProps {
 
 export default function VideoModal({ isOpen, videoUrl, onClose, title }: VideoModalProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [aspectRatio, setAspectRatio] = useState<"video" | "reel">("video");
 
+  // Prevent scroll when modal is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
-      setIsPlaying(true);
-      setCurrentTime(0);
-      setIsMuted(false);
     } else {
       document.body.style.overflow = "unset";
     }
@@ -32,17 +30,37 @@ export default function VideoModal({ isOpen, videoUrl, onClose, title }: VideoMo
     };
   }, [isOpen]);
 
+  // Programmatic play on mount/url change
+  useEffect(() => {
+    if (isOpen && videoUrl && videoRef.current) {
+      const video = videoRef.current;
+      
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((err) => {
+          console.log("Autoplay unmuted failed, trying muted:", err);
+          if (videoRef.current) {
+            videoRef.current.muted = true;
+            setIsMuted(true);
+            videoRef.current.play().catch((mutedErr) => {
+              console.log("Muted autoplay also failed, requiring user click:", mutedErr);
+              setIsPlaying(false);
+            });
+          }
+        });
+      }
+    }
+  }, [isOpen, videoUrl]);
+
   if (!isOpen) return null;
 
   const togglePlay = (e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
     if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-        setIsPlaying(false);
-      } else {
+      if (videoRef.current.paused) {
         videoRef.current.play().catch((err) => console.log("Play failed:", err));
-        setIsPlaying(true);
+      } else {
+        videoRef.current.pause();
       }
     }
   };
@@ -120,11 +138,12 @@ export default function VideoModal({ isOpen, videoUrl, onClose, title }: VideoMo
             <video
               ref={videoRef}
               src={videoUrl}
-              autoPlay
               playsInline
               muted={isMuted}
               onTimeUpdate={handleTimeUpdate}
               onLoadedMetadata={handleLoadedMetadata}
+              onPlay={() => setIsPlaying(true)}
+              onPause={() => setIsPlaying(false)}
               className="w-full h-full object-cover"
               onClick={() => togglePlay()}
             />

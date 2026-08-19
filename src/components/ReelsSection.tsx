@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import { motion } from "framer-motion";
-import { Smartphone, Heart, MessageCircle, Play } from "lucide-react";
+import { Heart, MessageCircle, Play } from "lucide-react";
 import { getAssetPath } from "@/utils/assets";
 
 interface ReelItem {
@@ -15,6 +15,110 @@ interface ReelItem {
 
 interface ReelsSectionProps {
   onPlayReel: (videoUrl: string, title: string) => void;
+}
+
+function ReelCard({
+  reel,
+  idx,
+  onPlayReel,
+}: {
+  reel: ReelItem;
+  idx: number;
+  onPlayReel: (videoUrl: string, title: string) => void;
+}) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const playPromiseRef = useRef<Promise<void> | null>(null);
+
+  const handleMouseEnter = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = true;
+      playPromiseRef.current = videoRef.current.play();
+      playPromiseRef.current.catch((err) => {
+        console.log("Reel preview play failed:", err);
+      });
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (videoRef.current) {
+      const video = videoRef.current;
+      if (playPromiseRef.current) {
+        playPromiseRef.current
+          .then(() => {
+            if (video) video.pause();
+          })
+          .catch(() => {
+            if (video) video.pause();
+          });
+      } else {
+        video.pause();
+      }
+    }
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: idx * 0.1 }}
+      onClick={() => onPlayReel(reel.videoUrl, reel.title)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className="relative aspect-[9/16] w-full rounded-[38px] border-8 border-zinc-800 bg-black shadow-2xl overflow-hidden group cursor-pointer"
+    >
+      {/* Camera Notch decoration */}
+      <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-24 h-4 rounded-full bg-zinc-800 z-30 flex items-center justify-center">
+        <span className="w-1.5 h-1.5 rounded-full bg-black mr-2" />
+        <span className="w-4 h-1 rounded-full bg-black/40" />
+      </div>
+
+      {/* Loop Video inside phone */}
+      <video
+        ref={videoRef}
+        src={reel.videoUrl}
+        className="absolute inset-0 w-full h-full object-cover opacity-75 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 pointer-events-none"
+        muted
+        loop
+        playsInline
+        preload="metadata"
+      />
+
+      {/* Gradient cover overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 z-10" />
+
+      {/* Social interaction tags (Likes/Comments overlay) */}
+      <div className="absolute right-4 bottom-20 z-20 flex flex-col items-center gap-4">
+        <div className="flex flex-col items-center gap-1 text-white text-[10px] font-bold">
+          <div className="w-9 h-9 rounded-full bg-black/40 border border-white/10 flex items-center justify-center backdrop-blur-sm group-hover:bg-pink-accent group-hover:border-pink-accent transition-colors">
+            <Heart size={14} fill="white" className="text-white" />
+          </div>
+          <span>{reel.likes}</span>
+        </div>
+        <div className="flex flex-col items-center gap-1 text-white text-[10px] font-bold">
+          <div className="w-9 h-9 rounded-full bg-black/40 border border-white/10 flex items-center justify-center backdrop-blur-sm group-hover:bg-blue-accent group-hover:border-blue-accent transition-colors">
+            <MessageCircle size={14} fill="white" className="text-white" />
+          </div>
+          <span>{reel.comments}</span>
+        </div>
+      </div>
+
+      {/* Video Play Trigger Indicator overlay */}
+      <div className="absolute inset-0 flex items-center justify-center z-20">
+        <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-100 transition-all duration-300">
+          <Play size={18} fill="white" className="text-white ml-0.5" />
+        </div>
+      </div>
+
+      {/* Phone footer overlay content */}
+      <div className="absolute bottom-6 left-4 right-4 z-20 flex flex-col gap-1 text-left">
+        <span className="text-[10px] text-zinc-400 font-bold tracking-wider">@akshay_kumbhar</span>
+        <p className="text-xs text-white font-bold truncate max-w-[80%]">
+          {reel.title}
+        </p>
+      </div>
+    </motion.div>
+  );
 }
 
 export default function ReelsSection({ onPlayReel }: ReelsSectionProps) {
@@ -68,65 +172,7 @@ export default function ReelsSection({ onPlayReel }: ReelsSectionProps) {
             key={reel.id}
             className="flex-shrink-0 w-[260px] snap-start"
           >
-            {/* Phone Mockup Wrapper */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-              onClick={() => onPlayReel(reel.videoUrl, reel.title)}
-              className="relative aspect-[9/16] w-full rounded-[38px] border-8 border-zinc-800 bg-black shadow-2xl overflow-hidden group cursor-pointer"
-            >
-              {/* Camera Notch decoration */}
-              <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-24 h-4 rounded-full bg-zinc-800 z-30 flex items-center justify-center">
-                <span className="w-1.5 h-1.5 rounded-full bg-black mr-2" />
-                <span className="w-4 h-1 rounded-full bg-black/40" />
-              </div>
-
-              {/* Loop Video inside phone */}
-              <video
-                src={reel.videoUrl}
-                className="absolute inset-0 w-full h-full object-cover opacity-75 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 pointer-events-none"
-                muted
-                loop
-                playsInline
-                autoPlay
-              />
-
-              {/* Gradient cover overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 z-10" />
-
-              {/* Social interaction tags (Likes/Comments overlay) */}
-              <div className="absolute right-4 bottom-20 z-20 flex flex-col items-center gap-4">
-                <div className="flex flex-col items-center gap-1 text-white text-[10px] font-bold">
-                  <div className="w-9 h-9 rounded-full bg-black/40 border border-white/10 flex items-center justify-center backdrop-blur-sm group-hover:bg-pink-accent group-hover:border-pink-accent transition-colors">
-                    <Heart size={14} fill="white" className="text-white" />
-                  </div>
-                  <span>{reel.likes}</span>
-                </div>
-                <div className="flex flex-col items-center gap-1 text-white text-[10px] font-bold">
-                  <div className="w-9 h-9 rounded-full bg-black/40 border border-white/10 flex items-center justify-center backdrop-blur-sm group-hover:bg-blue-accent group-hover:border-blue-accent transition-colors">
-                    <MessageCircle size={14} fill="white" className="text-white" />
-                  </div>
-                  <span>{reel.comments}</span>
-                </div>
-              </div>
-
-              {/* Video Play Trigger Indicator overlay */}
-              <div className="absolute inset-0 flex items-center justify-center z-20">
-                <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-100 transition-all duration-300">
-                  <Play size={18} fill="white" className="text-white ml-0.5" />
-                </div>
-              </div>
-
-              {/* Phone footer overlay content */}
-              <div className="absolute bottom-6 left-4 right-4 z-20 flex flex-col gap-1 text-left">
-                <span className="text-[10px] text-zinc-400 font-bold tracking-wider">@akshay_kumbhar</span>
-                <p className="text-xs text-white font-bold truncate max-w-[80%]">
-                  {reel.title}
-                </p>
-              </div>
-            </motion.div>
+            <ReelCard reel={reel} idx={idx} onPlayReel={onPlayReel} />
           </div>
         ))}
       </div>

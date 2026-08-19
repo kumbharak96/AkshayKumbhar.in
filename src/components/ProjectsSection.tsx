@@ -3,7 +3,6 @@
 import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Play, ArrowUpRight } from "lucide-react";
-import Image from "next/image";
 import { getAssetPath } from "@/utils/assets";
 
 interface Project {
@@ -30,12 +29,14 @@ function ProjectCard({
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoDuration, setVideoDuration] = useState<number | null>(null);
+  const playPromiseRef = useRef<Promise<void> | null>(null);
 
   const handleMouseEnter = () => {
     if (videoRef.current) {
       videoRef.current.currentTime = 0;
-      videoRef.current.muted = false; // Enable audio on hover
-      videoRef.current.play().catch((err) => {
+      videoRef.current.muted = true; // MUST be muted to autoplay preview on hover
+      playPromiseRef.current = videoRef.current.play();
+      playPromiseRef.current.catch((err) => {
         console.log("Hover video play failed:", err);
       });
     }
@@ -43,8 +44,18 @@ function ProjectCard({
 
   const handleMouseLeave = () => {
     if (videoRef.current) {
-      videoRef.current.pause();
-      videoRef.current.muted = true; // Reset mute state
+      const video = videoRef.current;
+      if (playPromiseRef.current) {
+        playPromiseRef.current
+          .then(() => {
+            if (video) video.pause();
+          })
+          .catch(() => {
+            if (video) video.pause();
+          });
+      } else {
+        video.pause();
+      }
     }
   };
 
@@ -85,6 +96,7 @@ function ProjectCard({
           loop
           playsInline
           muted
+          preload="none"
         />
 
         {/* Duration Overlay */}
@@ -262,7 +274,7 @@ export default function ProjectsSection({ onPlayVideo }: ProjectsSectionProps) {
             No projects in this category
           </p>
           <p className="text-xs text-zinc-500 mt-1">
-            Check out the "AI Ads" tab for featured vertical video ads!
+            {"Check out the \"AI Ads\" tab for featured vertical video ads!"}
           </p>
         </div>
       )}
