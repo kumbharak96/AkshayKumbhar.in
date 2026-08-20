@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Menu, ArrowUpRight, Download } from "lucide-react";
+import { getAssetPath } from "@/utils/assets";
 
 interface NavbarProps {
   onMenuToggle: () => void;
@@ -24,9 +25,10 @@ export default function Navbar({ onMenuToggle, onNavigate, isVisible = true }: N
       <div className="flex items-center gap-4">
         <button
           onClick={onMenuToggle}
-          className="p-2 rounded-xl hover:bg-white/5 text-zinc-400 hover:text-white transition-colors lg:hidden cursor-pointer"
+          className="lg:hidden text-zinc-400 hover:text-white p-1 transition-colors cursor-pointer"
+          aria-label="Toggle navigation drawer"
         >
-          <Menu size={22} />
+          <Menu size={20} />
         </button>
         <div 
           onClick={() => onNavigate("home")} 
@@ -40,7 +42,8 @@ export default function Navbar({ onMenuToggle, onNavigate, isVisible = true }: N
       <div className="flex items-center gap-2 sm:gap-3">
         {/* Download CV */}
         <a
-          href="#"
+          href={getAssetPath("/assets/Akshay Kumbhar CV.pdf")}
+          download="Akshay Kumbhar CV.pdf"
           className="flex items-center gap-2 p-2.5 sm:px-4 sm:py-2.5 rounded-xl text-xs font-bold text-zinc-300 hover:text-white border border-white/10 hover:border-white/20 transition-all duration-300 shadow-sm"
         >
           <Download size={14} className="shrink-0" />
