@@ -13,8 +13,18 @@ export default function HeroSection({ onViewProjects }: HeroSectionProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isMuted, setIsMuted] = useState(false);
   const [hasEnded, setHasEnded] = useState(false);
+  const [videoSrc, setVideoSrc] = useState<string>("");
   const playPromiseRef = useRef<Promise<void> | null>(null);
   const hasEndedRef = useRef(false);
+
+  // Resolve responsive video source on mount
+  useEffect(() => {
+    const isMobile = window.innerWidth < 768;
+    const src = isMobile 
+      ? getAssetPath("/assets/back-video-mobile.mp4") 
+      : getAssetPath("/assets/back-video.mp4");
+    setVideoSrc(src);
+  }, []);
 
   // Sync state with video element
   useEffect(() => {
@@ -26,6 +36,8 @@ export default function HeroSection({ onViewProjects }: HeroSectionProps) {
 
   // Attempt unmuted autoplay on initial load
   useEffect(() => {
+    if (!videoSrc) return;
+
     const video = videoRef.current;
     if (!video) return;
 
@@ -49,7 +61,7 @@ export default function HeroSection({ onViewProjects }: HeroSectionProps) {
           });
         }
       });
-  }, []);
+  }, [videoSrc]);
 
   // Scroll Play/Pause logic
   useEffect(() => {
@@ -146,13 +158,14 @@ export default function HeroSection({ onViewProjects }: HeroSectionProps) {
   return (
     <section 
       id="home" 
-      className="relative w-full h-auto aspect-video md:h-screen overflow-hidden z-20 bg-black"
+      className="relative w-full md:h-screen overflow-hidden z-20 bg-black"
     >
       {/* Background loop video playing once */}
       <video
         ref={videoRef}
-        className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none z-0"
-        src={getAssetPath("/assets/back-video.mp4")}
+        key={videoSrc}
+        className="w-full h-auto md:absolute md:inset-0 md:h-full md:object-cover pointer-events-none select-none z-0"
+        src={videoSrc || undefined}
         autoPlay
         playsInline
         preload="metadata"
