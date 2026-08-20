@@ -111,6 +111,12 @@ export default function HeroSection({ onViewProjects }: HeroSectionProps) {
       if (video && video.muted) {
         video.muted = false;
         setIsMuted(false);
+        // Force play on unmute to prevent mobile browsers from pausing
+        video.play().catch((err) => {
+          console.log("First interaction unmute play failed:", err);
+          video.muted = true;
+          setIsMuted(true);
+        });
       }
       // Remove listeners once triggered
       window.removeEventListener("click", handleFirstInteraction);
@@ -133,6 +139,16 @@ export default function HeroSection({ onViewProjects }: HeroSectionProps) {
       const nextMuted = !video.muted;
       video.muted = nextMuted;
       setIsMuted(nextMuted);
+
+      // Force play synchronously on unmute to prevent mobile browsers from pausing
+      if (!nextMuted) {
+        video.play().catch((err) => {
+          console.log("Play failed on unmute:", err);
+          // Fallback to muted if play fails
+          video.muted = true;
+          setIsMuted(true);
+        });
+      }
     }
   };
 
