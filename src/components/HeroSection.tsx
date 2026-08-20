@@ -14,6 +14,7 @@ export default function HeroSection({ onViewProjects }: HeroSectionProps) {
   const [isMuted, setIsMuted] = useState(true);
   const [hasEnded, setHasEnded] = useState(false);
   const playPromiseRef = useRef<Promise<void> | null>(null);
+  const hasEndedRef = useRef(false);
 
   // Sync state with video element
   useEffect(() => {
@@ -80,7 +81,7 @@ export default function HeroSection({ onViewProjects }: HeroSectionProps) {
         }
       } else if (!shouldPause && isPausedByScroll) {
         isPausedByScroll = false;
-        if (!video.ended) {
+        if (!video.ended && !hasEndedRef.current) {
           playPromiseRef.current = video.play();
           playPromiseRef.current.catch((err) => {
             console.log("Autoplay interrupted or failed:", err);
@@ -123,6 +124,11 @@ export default function HeroSection({ onViewProjects }: HeroSectionProps) {
 
   const handleVideoEnded = () => {
     setHasEnded(true);
+    hasEndedRef.current = true;
+    const video = videoRef.current;
+    if (video) {
+      video.currentTime = 0;
+    }
   };
 
   const handleReplayIntro = (e: React.MouseEvent) => {
@@ -132,6 +138,7 @@ export default function HeroSection({ onViewProjects }: HeroSectionProps) {
       video.currentTime = 0;
       video.play().catch((err) => console.log("Replay failed:", err));
       setHasEnded(false);
+      hasEndedRef.current = false;
     }
   };
 
