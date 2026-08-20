@@ -62,7 +62,7 @@ export default function ServicesSection({ onContactClick }: { onContactClick: ()
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
         {services.map((service, idx) => {
           const Icon = service.icon;
           return (
@@ -80,33 +80,33 @@ export default function ServicesSection({ onContactClick }: { onContactClick: ()
                 boxShadow: `0 10px 40px ${service.glowColor}`,
                 borderColor: "rgba(255, 255, 255, 0.15)"
               }}
-              className="relative p-8 rounded-card bg-card-bg/50 border border-white/5 backdrop-blur-md flex flex-col justify-between gap-6 transition-all duration-300 group"
+              className="relative p-4 sm:p-8 rounded-card bg-card-bg/50 border border-white/5 backdrop-blur-md flex flex-col justify-between gap-4 sm:gap-6 transition-all duration-300 group"
             >
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-3 sm:gap-4">
                 {/* Header Row */}
-                <div className="flex items-center justify-between">
-                  <div className={`w-12 h-12 rounded-2xl bg-gradient-to-tr ${service.gradient} flex items-center justify-center text-white shadow-lg`}>
-                    <Icon size={22} />
+                <div className="flex items-center justify-between gap-1">
+                  <div className={`w-8 h-8 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-gradient-to-tr ${service.gradient} flex items-center justify-center text-white shadow-lg`}>
+                    <Icon className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
                   </div>
-                  <span className="text-[10px] text-zinc-500 font-black uppercase tracking-widest">Service 0{idx + 1}</span>
+                  <span className="text-[8px] sm:text-[10px] text-zinc-500 font-black uppercase tracking-widest">Service 0{idx + 1}</span>
                 </div>
 
                 {/* Info */}
-                <div className="flex flex-col gap-2">
-                  <h3 className="text-xl font-bold text-white group-hover:text-white transition-colors duration-200">
+                <div className="flex flex-col gap-1 sm:gap-2">
+                  <h3 className="text-sm sm:text-xl font-bold text-white group-hover:text-white transition-colors duration-200">
                     {service.title}
                   </h3>
-                  <p className="text-sm text-zinc-400 leading-relaxed font-medium">
+                  <p className="text-[10px] sm:text-sm text-zinc-400 leading-normal sm:leading-relaxed font-medium">
                     {service.desc}
                   </p>
                 </div>
 
                 {/* Features List */}
-                <ul className="flex flex-col gap-2 mt-2">
+                <ul className="flex flex-col gap-1.5 mt-1 sm:mt-2">
                   {service.features.map((feature, fIdx) => (
-                    <li key={fIdx} className="flex items-center gap-2 text-xs font-semibold text-zinc-300">
-                      <span className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${service.gradient}`} />
-                      <span>{feature}</span>
+                    <li key={fIdx} className="flex items-center gap-1.5 text-[10px] sm:text-xs font-semibold text-zinc-300">
+                      <span className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${service.gradient} shrink-0`} />
+                      <span className="truncate">{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -115,10 +115,10 @@ export default function ServicesSection({ onContactClick }: { onContactClick: ()
               {/* Action Button */}
               <button 
                 onClick={onContactClick}
-                className="flex items-center gap-2 text-xs font-black text-white uppercase tracking-wider group-hover:gap-3 transition-all duration-300 w-fit cursor-pointer mt-2"
+                className="flex items-center gap-1 sm:gap-2 text-[10px] sm:text-xs font-black text-white uppercase tracking-wider group-hover:gap-3 transition-all duration-300 w-fit cursor-pointer mt-1 sm:mt-2"
               >
                 <span>Book Service</span>
-                <MoveRight size={14} className="text-zinc-500 group-hover:text-white" />
+                <MoveRight size={14} className="text-zinc-500 group-hover:text-white shrink-0" />
               </button>
             </motion.div>
           );

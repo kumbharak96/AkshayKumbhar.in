@@ -67,20 +67,20 @@ export default function AboutSection() {
           </motion.div>
 
           {/* Cards for Experience / Vision */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4">
             {/* Experience */}
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="p-5 rounded-card bg-card-bg/30 border border-white/5 backdrop-blur-md flex flex-col gap-3 group hover:border-white/10 transition-all duration-300"
+              className="p-3.5 sm:p-5 rounded-card bg-card-bg/30 border border-white/5 backdrop-blur-md flex flex-col gap-2.5 group hover:border-white/10 transition-all duration-300"
             >
-              <div className="w-8 h-8 rounded-lg bg-primary-purple/10 flex items-center justify-center text-primary-purple">
-                <Compass size={16} />
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-primary-purple/10 flex items-center justify-center text-primary-purple">
+                <Compass className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
               </div>
-              <h4 className="text-sm font-black text-white">Creative Journey</h4>
-              <p className="text-xs text-zinc-400 leading-relaxed font-medium">
+              <h4 className="text-xs sm:text-sm font-black text-white">Creative Journey</h4>
+              <p className="text-[10px] sm:text-xs text-zinc-400 leading-normal sm:leading-relaxed font-medium">
                 4+ years crafting social media campaigns, television spots, and promotional sequences.
               </p>
             </motion.div>
@@ -91,13 +91,13 @@ export default function AboutSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="p-5 rounded-card bg-card-bg/30 border border-white/5 backdrop-blur-md flex flex-col gap-3 group hover:border-white/10 transition-all duration-300"
+              className="p-3.5 sm:p-5 rounded-card bg-card-bg/30 border border-white/5 backdrop-blur-md flex flex-col gap-2.5 group hover:border-white/10 transition-all duration-300"
             >
-              <div className="w-8 h-8 rounded-lg bg-pink-accent/10 flex items-center justify-center text-pink-accent">
-                <Heart size={16} />
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-pink-accent/10 flex items-center justify-center text-pink-accent">
+                <Heart className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
               </div>
-              <h4 className="text-sm font-black text-white">Visual Vision</h4>
-              <p className="text-xs text-zinc-400 leading-relaxed font-medium">
+              <h4 className="text-xs sm:text-sm font-black text-white">Visual Vision</h4>
+              <p className="text-[10px] sm:text-xs text-zinc-400 leading-normal sm:leading-relaxed font-medium">
                 Merging artistic cinematic cuts with AI capabilities to push the boundaries of modern media ads.
               </p>
             </motion.div>

@@ -78,7 +78,7 @@ export default function WhyChooseMe() {
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
         {features.map((feat, idx) => {
           const Icon = feat.icon;
           return (
@@ -88,17 +88,17 @@ export default function WhyChooseMe() {
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: idx * 0.05 }}
               key={idx}
-              className="p-6 rounded-card bg-card-bg/40 border border-white/5 backdrop-blur-md flex flex-col gap-4 hover:border-white/10 hover:bg-card-bg/60 transition-all duration-300"
+              className="p-4 sm:p-6 rounded-card bg-card-bg/40 border border-white/5 backdrop-blur-md flex flex-col gap-3 hover:border-white/10 hover:bg-card-bg/60 transition-all duration-300"
             >
               {/* Icon */}
-              <div className={`w-10 h-10 rounded-xl flex items-center justify-center border ${feat.color}`}>
-                <Icon size={18} />
+              <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center border ${feat.color}`}>
+                <Icon className="w-4 h-4 sm:w-4.5 sm:h-4.5 shrink-0" />
               </div>
 
               {/* Copy */}
               <div className="flex flex-col gap-1">
-                <h3 className="text-base font-extrabold text-white">{feat.title}</h3>
-                <p className="text-xs text-zinc-400 leading-relaxed font-medium">
+                <h3 className="text-sm sm:text-base font-extrabold text-white">{feat.title}</h3>
+                <p className="text-[10px] sm:text-xs text-zinc-400 leading-normal sm:leading-relaxed font-medium">
                   {feat.desc}
                 </p>
               </div>

@@ -119,19 +119,19 @@ function ProjectCard({
       </div>
 
       {/* Card Meta Content */}
-      <div className="p-5 flex flex-col gap-3">
-        <div className="flex items-center justify-between">
-          <span className="text-[10px] text-zinc-400 font-bold uppercase tracking-widest bg-zinc-900 border border-white/5 px-2.5 py-0.5 rounded-full">
+      <div className="p-3 sm:p-5 flex flex-col gap-2 sm:gap-3">
+        <div className="flex items-center justify-between gap-1">
+          <span className="text-[8px] sm:text-[10px] text-zinc-400 font-bold uppercase tracking-wider bg-zinc-900 border border-white/5 px-2 py-0.5 rounded-full whitespace-nowrap">
             {project.category}
           </span>
-          <span className="text-xs text-zinc-500 font-semibold">{project.client}</span>
+          <span className="text-[10px] sm:text-xs text-zinc-500 font-semibold truncate">{project.client}</span>
         </div>
-        <div className="flex flex-col gap-1.5">
-          <h3 className="text-base font-bold text-white group-hover:text-primary-purple transition-colors duration-200 flex items-center justify-between">
-            <span>{project.name}</span>
-            <ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="flex flex-col gap-1 sm:gap-1.5">
+          <h3 className="text-xs sm:text-base font-bold text-white group-hover:text-primary-purple transition-colors duration-200 flex items-center justify-between gap-1">
+            <span className="truncate">{project.name}</span>
+            <ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 shrink-0" />
           </h3>
-          <p className="text-xs text-zinc-400 line-clamp-2 leading-relaxed">
+          <p className="text-[10px] sm:text-xs text-zinc-400 line-clamp-2 leading-normal sm:leading-relaxed">
             {project.description}
           </p>
         </div>
@@ -262,7 +262,7 @@ export default function ProjectsSection({ onPlayVideo }: ProjectsSectionProps) {
       {filteredProjects.length > 0 ? (
         <motion.div 
           layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6"
         >
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project) => (

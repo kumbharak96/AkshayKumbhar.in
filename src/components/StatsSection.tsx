@@ -41,7 +41,7 @@ export default function StatsSection() {
 
   return (
     <section id="stats" className="py-8 lg:py-16 flex flex-col gap-10">
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
         {stats.map((stat, idx) => {
           const Icon = stat.icon;
           return (
@@ -51,25 +51,25 @@ export default function StatsSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
               key={idx}
-              className="p-6 rounded-card bg-card-bg/40 border border-white/5 backdrop-blur-md flex flex-col gap-3 group hover:border-white/10 transition-all duration-300"
+              className="p-4 sm:p-6 rounded-card bg-card-bg/40 border border-white/5 backdrop-blur-md flex flex-col gap-2 group hover:border-white/10 transition-all duration-300"
             >
               {/* Icon wrapper */}
-              <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-primary-purple group-hover:bg-primary-purple group-hover:text-white transition-colors duration-300">
-                <Icon size={18} />
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-white/5 flex items-center justify-center text-primary-purple group-hover:bg-primary-purple group-hover:text-white transition-colors duration-300">
+                <Icon className="w-4 h-4 sm:w-4.5 sm:h-4.5 shrink-0" />
               </div>
 
               {/* Counter Value */}
-              <div className="flex flex-col gap-0.5 mt-2">
-                <span className="font-mono text-4xl font-black text-white tracking-tight">
+              <div className="flex flex-col gap-0.5 mt-1 sm:mt-2">
+                <span className="font-mono text-2xl sm:text-4xl font-black text-white tracking-tight">
                   {stat.value}
                 </span>
-                <span className="text-xs font-bold text-zinc-300 uppercase tracking-widest mt-1">
+                <span className="text-[10px] sm:text-xs font-bold text-zinc-300 uppercase tracking-widest mt-0.5 sm:mt-1">
                   {stat.label}
                 </span>
               </div>
 
               {/* Desc */}
-              <p className="text-xs text-zinc-500 leading-relaxed font-semibold">
+              <p className="text-[9px] sm:text-xs text-zinc-500 leading-normal sm:leading-relaxed font-semibold">
                 {stat.desc}
               </p>
             </motion.div>
