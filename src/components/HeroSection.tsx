@@ -155,7 +155,7 @@ export default function HeroSection({ onViewProjects }: HeroSectionProps) {
         src={getAssetPath("/assets/back-video.mp4")}
         autoPlay
         playsInline
-        preload="auto"
+        preload="metadata"
         muted={isMuted}
         onEnded={handleVideoEnded}
       />
