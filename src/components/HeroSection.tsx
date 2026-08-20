@@ -26,14 +26,6 @@ export default function HeroSection({ onViewProjects }: HeroSectionProps) {
     setVideoSrc(src);
   }, []);
 
-  // Sync state with video element
-  useEffect(() => {
-    const video = videoRef.current;
-    if (video) {
-      video.muted = isMuted;
-    }
-  }, [isMuted]);
-
   // Attempt unmuted autoplay on initial load
   useEffect(() => {
     if (!videoSrc) return;
@@ -115,12 +107,11 @@ export default function HeroSection({ onViewProjects }: HeroSectionProps) {
   // Audio Unmute on first user interaction anywhere (if initial unmuted autoplay was blocked)
   useEffect(() => {
     const handleFirstInteraction = () => {
-      setIsMuted((muted) => {
-        if (muted) {
-          return false;
-        }
-        return muted;
-      });
+      const video = videoRef.current;
+      if (video && video.muted) {
+        video.muted = false;
+        setIsMuted(false);
+      }
       // Remove listeners once triggered
       window.removeEventListener("click", handleFirstInteraction);
       window.removeEventListener("touchstart", handleFirstInteraction);
@@ -134,6 +125,16 @@ export default function HeroSection({ onViewProjects }: HeroSectionProps) {
       window.removeEventListener("touchstart", handleFirstInteraction);
     };
   }, []);
+
+  const handleToggleMute = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const video = videoRef.current;
+    if (video) {
+      const nextMuted = !video.muted;
+      video.muted = nextMuted;
+      setIsMuted(nextMuted);
+    }
+  };
 
   const handleVideoEnded = () => {
     setHasEnded(true);
@@ -149,6 +150,7 @@ export default function HeroSection({ onViewProjects }: HeroSectionProps) {
     const video = videoRef.current;
     if (video) {
       video.currentTime = 0;
+      video.muted = isMuted; // Preserve current user mute preference on replay
       video.play().catch((err) => console.log("Replay failed:", err));
       setHasEnded(false);
       hasEndedRef.current = false;
@@ -211,10 +213,7 @@ export default function HeroSection({ onViewProjects }: HeroSectionProps) {
       {/* Floating Sound Toggle Button */}
       <div className="absolute bottom-4 right-4 md:bottom-8 md:right-8 z-30 flex items-center gap-3">
         <button
-          onClick={(e) => {
-            e.stopPropagation();
-            setIsMuted((prev) => !prev);
-          }}
+          onClick={handleToggleMute}
           className="flex items-center justify-center gap-1.5 md:gap-2.5 p-2.5 md:px-4.5 md:py-3 rounded-full bg-black/60 hover:bg-black/80 text-white/90 hover:text-white border border-white/10 hover:border-white/20 transition-all duration-300 shadow-lg backdrop-blur-md group cursor-pointer scale-100 hover:scale-105 active:scale-95"
           aria-label={isMuted ? "Unmute background video" : "Mute background video"}
         >
