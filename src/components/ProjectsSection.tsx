@@ -4,7 +4,6 @@ import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Play, ArrowUpRight } from "lucide-react";
 import { getAssetPath } from "@/utils/assets";
-import SolarSystemBackground from "./SolarSystemBackground";
 
 interface Project {
   id: string;
@@ -23,12 +22,10 @@ interface ProjectsSectionProps {
 
 function ProjectCard({ 
   project, 
-  onPlayVideo,
-  index
+  onPlayVideo 
 }: { 
   project: Project; 
   onPlayVideo: (videoUrl: string, title: string) => void; 
-  index: number;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoDuration, setVideoDuration] = useState<number | null>(null);
@@ -80,49 +77,13 @@ function ProjectCard({
     return `${m}:${s < 10 ? "0" : ""}${s}`;
   };
 
-  const cardVariants = {
-    hidden: { 
-      opacity: 0, 
-      y: 70, 
-      rotateX: 20, 
-      rotateY: -8,
-      scale: 0.92,
-      z: -60
-    },
-    visible: (customIndex: number) => ({ 
-      opacity: 1, 
-      y: 0, 
-      rotateX: 0, 
-      rotateY: 0,
-      scale: 1,
-      z: 0,
-      transition: { 
-        type: "spring" as const, 
-        stiffness: 55, 
-        damping: 14,
-        delay: customIndex * 0.08, // stagger cards dynamically
-        duration: 0.6
-      }
-    })
-  };
-
   return (
     <motion.div
       layout
-      variants={cardVariants}
-      custom={index}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-40px" }}
-      whileHover={{
-        scale: 1.03,
-        rotateY: 6,
-        rotateX: -6,
-        z: 25,
-        boxShadow: "0px 20px 40px rgba(124, 58, 237, 0.25)",
-        transition: { duration: 0.2 }
-      }}
-      style={{ transformStyle: "preserve-3d" }}
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.3 }}
       key={project.id}
       onClick={() => onPlayVideo(project.videoUrl, project.name)}
       onMouseEnter={handleMouseEnter}
@@ -265,12 +226,9 @@ export default function ProjectsSection({ onPlayVideo }: ProjectsSectionProps) {
     : projects.filter((p) => p.category === activeTab);
 
   return (
-    <section id="projects" className="py-8 lg:py-16 flex flex-col gap-10 scroll-mt-24 relative">
-      {/* 3D Solar System Background */}
-      <SolarSystemBackground />
-
+    <section id="projects" className="py-8 lg:py-16 flex flex-col gap-10 scroll-mt-24">
       {/* Header Info */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/5 pb-6 relative z-10">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/5 pb-6">
         <div className="flex flex-col gap-2">
           <h2 className="font-display text-3xl font-black text-white tracking-tight relative pl-4 border-l-4 border-primary-purple">
             Featured Work
@@ -282,7 +240,7 @@ export default function ProjectsSection({ onPlayVideo }: ProjectsSectionProps) {
       </div>
 
       {/* Categories Filter Tabs */}
-      <div className="flex gap-2 overflow-x-auto no-scrollbar pb-3 border-b border-white/5 mask-gradient-x relative z-10">
+      <div className="flex gap-2 overflow-x-auto no-scrollbar pb-3 border-b border-white/5 mask-gradient-x">
         {tabs.map((tab) => (
           <button
             key={tab}
@@ -304,22 +262,20 @@ export default function ProjectsSection({ onPlayVideo }: ProjectsSectionProps) {
       {filteredProjects.length > 0 ? (
         <motion.div 
           layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10"
-          style={{ perspective: 1500, transformStyle: "preserve-3d" }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project, index) => (
+            {filteredProjects.map((project) => (
               <ProjectCard 
                 key={project.id} 
                 project={project} 
                 onPlayVideo={onPlayVideo} 
-                index={index}
               />
             ))}
           </AnimatePresence>
         </motion.div>
       ) : (
-        <div className="py-20 flex flex-col items-center justify-center text-center border border-white/5 bg-secondary-bg/20 rounded-card backdrop-blur-sm relative z-10">
+        <div className="py-20 flex flex-col items-center justify-center text-center border border-white/5 bg-secondary-bg/20 rounded-card backdrop-blur-sm">
           <p className="text-zinc-400 text-sm font-semibold tracking-wide">
             No projects in this category
           </p>
