@@ -171,7 +171,7 @@ export default function HeroSection({ onViewProjects }: HeroSectionProps) {
         autoPlay
         playsInline
         preload="metadata"
-        muted={isMuted}
+        muted={true}
         onEnded={handleVideoEnded}
       />
 
