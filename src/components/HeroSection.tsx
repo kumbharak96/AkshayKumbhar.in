@@ -200,7 +200,7 @@ export default function HeroSection({ onViewProjects }: HeroSectionProps) {
             e.stopPropagation();
             setIsMuted((prev) => !prev);
           }}
-          className="flex items-center gap-1.5 md:gap-2.5 px-3 py-2 md:px-4.5 md:py-3 rounded-full bg-black/60 hover:bg-black/80 text-white/90 hover:text-white border border-white/10 hover:border-white/20 transition-all duration-300 shadow-lg backdrop-blur-md group cursor-pointer scale-100 hover:scale-105 active:scale-95"
+          className="flex items-center justify-center gap-1.5 md:gap-2.5 p-2.5 md:px-4.5 md:py-3 rounded-full bg-black/60 hover:bg-black/80 text-white/90 hover:text-white border border-white/10 hover:border-white/20 transition-all duration-300 shadow-lg backdrop-blur-md group cursor-pointer scale-100 hover:scale-105 active:scale-95"
           aria-label={isMuted ? "Unmute background video" : "Mute background video"}
         >
           <div className="relative w-4 h-4 md:w-5 md:h-5 flex items-center justify-center">
@@ -210,7 +210,7 @@ export default function HeroSection({ onViewProjects }: HeroSectionProps) {
               <Volume2 className="w-3.5 h-3.5 md:w-4.5 md:h-4.5 text-primary-purple transition-colors" />
             )}
           </div>
-          <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest select-none">
+          <span className="hidden sm:inline-block text-[10px] md:text-xs font-bold uppercase tracking-widest select-none">
             {isMuted ? "Sound Off" : "Sound On"}
           </span>
           

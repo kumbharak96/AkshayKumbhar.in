@@ -136,7 +136,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-background font-sans text-white antialiased flex">
+    <div className="min-h-screen bg-background font-sans text-white antialiased flex overflow-x-hidden">
       {/* Left Sticky Sidebar */}
       <Sidebar
         activeSection={activeSection}
@@ -147,7 +147,7 @@ export default function Home() {
       />
 
       {/* Main Content Area */}
-      <div className={`flex-1 flex flex-col min-w-0 transition-[margin] duration-500 ease-in-out ${showSidebar ? "lg:ml-[280px]" : "lg:ml-0"}`}>
+      <div className={`flex-1 flex flex-col min-w-0 transition-[padding] duration-500 ease-in-out ${showSidebar ? "lg:pl-[280px]" : "lg:pl-0"}`}>
         
         <Navbar
           onMenuToggle={() => setIsSidebarOpen(true)}
