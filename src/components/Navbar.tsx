@@ -16,6 +16,7 @@ export default function Navbar({ onMenuToggle, onNavigate, isVisible = true }: N
       flex items-center justify-between px-6 lg:px-12 
       transition-all duration-500 ease-in-out
       ${isVisible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0 pointer-events-none"}
+      max-lg:translate-y-0 max-lg:opacity-100 max-lg:pointer-events-auto
     `}>
       {/* Mobile Toggle & Logo */}
       <div className="flex items-center gap-4">

@@ -11,7 +11,7 @@ interface HeroSectionProps {
 
 export default function HeroSection({ onViewProjects }: HeroSectionProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isMuted, setIsMuted] = useState(true);
+  const [isMuted, setIsMuted] = useState(false);
   const [hasEnded, setHasEnded] = useState(false);
   const playPromiseRef = useRef<Promise<void> | null>(null);
   const hasEndedRef = useRef(false);

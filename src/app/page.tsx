@@ -5,6 +5,7 @@ import Lenis from "lenis";
 
 // Import Components
 import Sidebar from "@/components/Sidebar";
+import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import CategoriesSection from "@/components/CategoriesSection";
@@ -148,6 +149,12 @@ export default function Home() {
       {/* Main Content Area */}
       <div className={`flex-1 flex flex-col min-w-0 transition-[margin] duration-500 ease-in-out ${showSidebar ? "lg:ml-[280px]" : "lg:ml-0"}`}>
         
+        <Navbar
+          onMenuToggle={() => setIsSidebarOpen(true)}
+          onNavigate={handleNavigate}
+          isVisible={showSidebar}
+        />
+
         {/* Section 1: Hero */}
         <HeroSection 
           onWatchShowreel={() => handleOpenVideo(getAssetPath("/assets/Video1.mp4"), "Akshay Kumbhar - Editing Showreel")}
