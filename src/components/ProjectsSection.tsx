@@ -92,17 +92,17 @@ function ProjectCard({
     >
       {/* Media Card Aspect ratio (9:16 for vertical ads) */}
       <div className="relative aspect-[9/16] overflow-hidden bg-zinc-950">
-        {/* Preview Video, showing poster when not playing, fallback to first-frame if thumbnail missing */}
+        {/* Preview Video, showing poster when not playing, falling back to first-frame if thumbnail is missing/placeholder */}
         <video
           ref={videoRef}
           src={project.videoUrl}
-          poster={project.thumbnail}
+          poster={project.thumbnail && !project.thumbnail.includes("-thumb.jpg") ? project.thumbnail : undefined}
           onLoadedMetadata={handleLoadedMetadata}
           className="absolute inset-0 w-full h-full object-cover pointer-events-none group-hover:scale-105 transition-transform duration-700 bg-zinc-950"
           loop
           playsInline
           muted
-          preload="none"
+          preload="metadata"
         />
 
         {/* Duration Overlay */}
