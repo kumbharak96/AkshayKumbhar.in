@@ -12,9 +12,11 @@ interface NavbarProps {
 export default function Navbar({ onMenuToggle, onNavigate, isVisible = true }: NavbarProps) {
   return (
     <header className={`
-      sticky top-0 right-0 z-30 w-full h-20 bg-background/60 backdrop-blur-md border-b border-white/5 
+      fixed top-0 right-0 z-30 h-20 bg-background/60 backdrop-blur-md border-b border-white/5 
       flex items-center justify-between px-6 lg:px-12 
       transition-all duration-500 ease-in-out
+      ${isVisible ? "lg:left-[280px]" : "lg:left-0"}
+      left-0
       ${isVisible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0 pointer-events-none"}
       max-lg:translate-y-0 max-lg:opacity-100 max-lg:pointer-events-auto
     `}>

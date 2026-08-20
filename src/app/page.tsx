@@ -147,7 +147,7 @@ export default function Home() {
       />
 
       {/* Main Content Area */}
-      <div className={`flex-1 flex flex-col min-w-0 transition-[padding] duration-500 ease-in-out ${showSidebar ? "lg:pl-[280px]" : "lg:pl-0"}`}>
+      <div className={`flex-1 flex flex-col min-w-0 pt-20 md:pt-0 transition-[padding] duration-500 ease-in-out ${showSidebar ? "lg:pl-[280px]" : "lg:pl-0"}`}>
         
         <Navbar
           onMenuToggle={() => setIsSidebarOpen(true)}
