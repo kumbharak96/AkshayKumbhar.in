@@ -59,7 +59,8 @@ export default function HeroSection({ onViewProjects }: HeroSectionProps) {
       const video = videoRef.current;
       if (!video) return;
 
-      const shouldPause = window.scrollY > 50;
+      const videoHeight = video.clientHeight || window.innerHeight || 400;
+      const shouldPause = window.scrollY > videoHeight;
 
       if (shouldPause && !isPausedByScroll) {
         isPausedByScroll = true;
@@ -154,6 +155,7 @@ export default function HeroSection({ onViewProjects }: HeroSectionProps) {
         src={getAssetPath("/assets/back-video.mp4")}
         autoPlay
         playsInline
+        preload="auto"
         muted={isMuted}
         onEnded={handleVideoEnded}
       />
