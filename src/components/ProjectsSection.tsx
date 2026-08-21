@@ -29,9 +29,11 @@ function ProjectCard({
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoDuration, setVideoDuration] = useState<number | null>(null);
+  const [isHovered, setIsHovered] = useState(false);
   const playPromiseRef = useRef<Promise<void> | null>(null);
 
   const handleMouseEnter = () => {
+    setIsHovered(true);
     if (videoRef.current) {
       videoRef.current.currentTime = 0;
       videoRef.current.muted = false; // Attempt to play with audio on hover
@@ -49,18 +51,26 @@ function ProjectCard({
   };
 
   const handleMouseLeave = () => {
+    setIsHovered(false);
     if (videoRef.current) {
       const video = videoRef.current;
       if (playPromiseRef.current) {
         playPromiseRef.current
           .then(() => {
-            if (video) video.pause();
+            if (video) {
+              video.pause();
+              video.load(); // Reset video state so poster is displayed again
+            }
           })
           .catch(() => {
-            if (video) video.pause();
+            if (video) {
+              video.pause();
+              video.load(); // Reset video state so poster is displayed again
+            }
           });
       } else {
         video.pause();
+        video.load(); // Reset video state so poster is displayed again
       }
     }
   };
@@ -105,13 +115,23 @@ function ProjectCard({
           preload="metadata"
         />
 
+        {/* Thumbnail Overlay to show when not hovered */}
+        {project.thumbnail && (
+          <img
+            src={project.thumbnail}
+            alt={project.name}
+            className={`absolute inset-0 w-full h-full object-cover pointer-events-none transition-all duration-300 z-10
+              ${isHovered ? "opacity-0 invisible" : "opacity-100 visible"}`}
+          />
+        )}
+
         {/* Duration Overlay */}
-        <div className="absolute top-3 right-3 px-2 py-0.5 rounded bg-black/75 border border-white/5 text-[10px] font-bold text-zinc-300 z-10">
+        <div className="absolute top-3 right-3 px-2 py-0.5 rounded bg-black/75 border border-white/5 text-[10px] font-bold text-zinc-300 z-20">
           {videoDuration !== null ? formatDuration(videoDuration) : project.duration}
         </div>
 
         {/* Play Button Overlay (hides on hover) */}
-        <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-transparent transition-all duration-300 z-10">
+        <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-transparent transition-all duration-300 z-20">
           <div className="w-12 h-12 rounded-full flex items-center justify-center bg-white/10 backdrop-blur-md border border-white/20 shadow-lg scale-100 group-hover:scale-90 opacity-100 group-hover:opacity-0 transition-all duration-300">
             <Play size={18} fill="white" className="text-white ml-0.5" />
           </div>

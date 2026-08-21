@@ -63,8 +63,7 @@ export default function HeroSection({ onViewProjects }: HeroSectionProps) {
       const video = videoRef.current;
       if (!video) return;
 
-      const videoHeight = video.clientHeight || window.innerHeight || 400;
-      const shouldPause = window.scrollY > videoHeight;
+      const shouldPause = window.scrollY > 10;
 
       if (shouldPause && !isPausedByScroll) {
         isPausedByScroll = true;
