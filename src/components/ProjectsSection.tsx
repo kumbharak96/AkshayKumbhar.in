@@ -96,7 +96,7 @@ function ProjectCard({
         <video
           ref={videoRef}
           src={project.videoUrl}
-          poster={project.thumbnail && !project.thumbnail.includes("-thumb.jpg") ? project.thumbnail : undefined}
+          poster={project.thumbnail || undefined}
           onLoadedMetadata={handleLoadedMetadata}
           className="absolute inset-0 w-full h-full object-cover pointer-events-none group-hover:scale-105 transition-transform duration-700 bg-zinc-950"
           loop
