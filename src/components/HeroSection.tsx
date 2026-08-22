@@ -121,33 +121,6 @@ export default function HeroSection({ onViewProjects }: HeroSectionProps) {
     };
   }, []);
 
-  // Audio Unmute on first user interaction anywhere (if initial unmuted autoplay was blocked)
-  useEffect(() => {
-    const handleFirstInteraction = () => {
-      const video = videoRef.current;
-      if (video && video.muted) {
-        video.muted = false;
-        setIsMuted(false);
-        // Force play on unmute to prevent mobile browsers from pausing
-        video.play().catch((err) => {
-          console.log("First interaction unmute play failed:", err);
-          video.muted = true;
-          setIsMuted(true);
-        });
-      }
-      // Remove listeners once triggered
-      window.removeEventListener("click", handleFirstInteraction);
-      window.removeEventListener("touchstart", handleFirstInteraction);
-    };
-
-    window.addEventListener("click", handleFirstInteraction);
-    window.addEventListener("touchstart", handleFirstInteraction);
-
-    return () => {
-      window.removeEventListener("click", handleFirstInteraction);
-      window.removeEventListener("touchstart", handleFirstInteraction);
-    };
-  }, []);
 
   const handleToggleMute = (e: React.MouseEvent) => {
     e.stopPropagation();

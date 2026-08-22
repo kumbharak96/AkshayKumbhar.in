@@ -29,14 +29,12 @@ function ProjectCard({
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoDuration, setVideoDuration] = useState<number | null>(null);
-  const [isHovered, setIsHovered] = useState(false);
   const playPromiseRef = useRef<Promise<void> | null>(null);
 
   const handleMouseEnter = () => {
     // Only run hover playback on devices supporting hover interaction (desktops)
     if (typeof window !== "undefined" && !window.matchMedia("(hover: hover)").matches) return;
 
-    setIsHovered(true);
     if (videoRef.current) {
       videoRef.current.muted = false; // Attempt to play with audio on hover
       playPromiseRef.current = videoRef.current.play();
@@ -55,7 +53,6 @@ function ProjectCard({
   const handleMouseLeave = () => {
     if (typeof window !== "undefined" && !window.matchMedia("(hover: hover)").matches) return;
 
-    setIsHovered(false);
     if (videoRef.current) {
       const video = videoRef.current;
       if (playPromiseRef.current) {
@@ -136,8 +133,7 @@ function ProjectCard({
           <img
             src={project.thumbnail}
             alt={project.name}
-            className={`absolute inset-0 w-full h-full object-cover pointer-events-none transition-all duration-300 z-10
-              ${isHovered ? "opacity-0 invisible" : "opacity-100 visible"}`}
+            className="absolute inset-0 w-full h-full object-cover pointer-events-none transition-all duration-300 z-10 opacity-100 group-hover:opacity-0 group-hover:invisible"
           />
         )}
 
