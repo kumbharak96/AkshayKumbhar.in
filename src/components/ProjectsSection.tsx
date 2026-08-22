@@ -30,60 +30,39 @@ function ProjectCard({
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoDuration, setVideoDuration] = useState<number | null>(null);
   const playPromiseRef = useRef<Promise<void> | null>(null);
+  const isTouchRef = useRef(false);
 
   const handleMouseEnter = () => {
-    // Only run hover playback on devices supporting hover interaction (desktops)
-    if (typeof window !== "undefined" && !window.matchMedia("(hover: hover)").matches) return;
+    // Only run hover playback if the interaction was not a touch tap
+    if (isTouchRef.current) return;
 
-    if (videoRef.current) {
-      videoRef.current.muted = false; // Attempt to play with audio on hover
-      playPromiseRef.current = videoRef.current.play();
-      playPromiseRef.current.catch((err) => {
-        console.log("Hover unmuted video play failed, falling back to muted:", err);
-        if (videoRef.current) {
-          videoRef.current.muted = true; // Fallback to muted to prevent block
-          playPromiseRef.current = videoRef.current.play().catch((mutedErr) => {
-            console.log("Hover muted video play failed:", mutedErr);
+    const video = videoRef.current;
+    if (video) {
+      video.muted = true; // Always play muted on hover preview to guarantee no autoplay block
+      try {
+        const playPromise = video.play();
+        if (playPromise !== undefined && typeof playPromise.catch === "function") {
+          playPromiseRef.current = playPromise;
+          playPromise.catch((err) => {
+            console.log("Hover play failed/interrupted:", err);
           });
         }
-      });
+      } catch (err) {
+        console.log("Synchronous play failed:", err);
+      }
     }
   };
 
   const handleMouseLeave = () => {
-    if (typeof window !== "undefined" && !window.matchMedia("(hover: hover)").matches) return;
+    isTouchRef.current = false; // Reset touch state
 
-    if (videoRef.current) {
-      const video = videoRef.current;
-      if (playPromiseRef.current) {
-        playPromiseRef.current
-          .then(() => {
-            if (video) {
-              video.pause();
-              try {
-                video.currentTime = 0;
-              } catch (e) {
-                // Ignore if metadata is not loaded yet
-              }
-            }
-          })
-          .catch(() => {
-            if (video) {
-              video.pause();
-              try {
-                video.currentTime = 0;
-              } catch (e) {
-                // Ignore if metadata is not loaded yet
-              }
-            }
-          });
-      } else {
+    const video = videoRef.current;
+    if (video) {
+      try {
         video.pause();
-        try {
-          video.currentTime = 0;
-        } catch (e) {
-          // Ignore if metadata is not loaded yet
-        }
+        video.currentTime = 0;
+      } catch (err) {
+        console.log("Pause failed:", err);
       }
     }
   };
@@ -111,6 +90,7 @@ function ProjectCard({
       onClick={() => onPlayVideo(project.videoUrl, project.name)}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onTouchStart={() => { isTouchRef.current = true; }}
       className="group glass-card rounded-card overflow-hidden cursor-pointer relative flex flex-col w-full"
     >
       {/* Media Card Aspect ratio (9:16 for vertical ads) */}

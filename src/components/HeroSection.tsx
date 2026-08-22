@@ -103,7 +103,7 @@ export default function HeroSection({ onViewProjects }: HeroSectionProps) {
         }
       } else if (!shouldPause && isPausedByScroll) {
         isPausedByScroll = false;
-        if (!video.ended && !hasEndedRef.current) {
+        if (isPlayingRef.current && !video.ended && !hasEndedRef.current) {
           playPromiseRef.current = video.play();
           playPromiseRef.current.catch((err) => {
             console.log("Autoplay interrupted or failed:", err);
