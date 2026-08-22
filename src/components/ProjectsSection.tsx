@@ -33,9 +33,11 @@ function ProjectCard({
   const playPromiseRef = useRef<Promise<void> | null>(null);
 
   const handleMouseEnter = () => {
+    // Only run hover playback on devices supporting hover interaction (desktops)
+    if (typeof window !== "undefined" && !window.matchMedia("(hover: hover)").matches) return;
+
     setIsHovered(true);
     if (videoRef.current) {
-      videoRef.current.currentTime = 0;
       videoRef.current.muted = false; // Attempt to play with audio on hover
       playPromiseRef.current = videoRef.current.play();
       playPromiseRef.current.catch((err) => {
@@ -51,6 +53,8 @@ function ProjectCard({
   };
 
   const handleMouseLeave = () => {
+    if (typeof window !== "undefined" && !window.matchMedia("(hover: hover)").matches) return;
+
     setIsHovered(false);
     if (videoRef.current) {
       const video = videoRef.current;
@@ -59,18 +63,30 @@ function ProjectCard({
           .then(() => {
             if (video) {
               video.pause();
-              video.load(); // Reset video state so poster is displayed again
+              try {
+                video.currentTime = 0;
+              } catch (e) {
+                // Ignore if metadata is not loaded yet
+              }
             }
           })
           .catch(() => {
             if (video) {
               video.pause();
-              video.load(); // Reset video state so poster is displayed again
+              try {
+                video.currentTime = 0;
+              } catch (e) {
+                // Ignore if metadata is not loaded yet
+              }
             }
           });
       } else {
         video.pause();
-        video.load(); // Reset video state so poster is displayed again
+        try {
+          video.currentTime = 0;
+        } catch (e) {
+          // Ignore if metadata is not loaded yet
+        }
       }
     }
   };
