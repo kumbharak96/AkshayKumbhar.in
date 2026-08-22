@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { X, Play, Pause, Volume2, VolumeX } from "lucide-react";
+import { ArrowLeft, Maximize2, Play, Pause, Volume2, VolumeX } from "lucide-react";
 
 interface VideoModalProps {
   isOpen: boolean;
@@ -76,6 +76,17 @@ export default function VideoModal({ isOpen, videoUrl, onClose, title }: VideoMo
     }
   };
 
+  const toggleFullscreen = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    if (videoRef.current) {
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(err => console.log(err));
+      } else {
+        videoRef.current.requestFullscreen().catch(err => console.log(err));
+      }
+    }
+  };
+
   const handleTimeUpdate = () => {
     if (videoRef.current) {
       setCurrentTime(videoRef.current.currentTime);
@@ -125,13 +136,14 @@ export default function VideoModal({ isOpen, videoUrl, onClose, title }: VideoMo
           ${aspectRatio === "reel" ? "max-w-[340px] aspect-[9/16] h-[75vh]" : "max-w-4xl aspect-video"}
         `}
       >
-        {/* Floating Close Button */}
+        {/* Floating Back Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-50 p-2 rounded-full bg-black/60 hover:bg-black/85 text-white/80 hover:text-white hover:scale-105 border border-white/10 hover:border-white/20 transition-all cursor-pointer shadow-lg backdrop-blur-sm"
-          aria-label="Close video"
+          className="absolute top-4 left-4 z-50 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 hover:bg-black/85 text-white/80 hover:text-white hover:scale-105 border border-white/10 hover:border-white/20 transition-all cursor-pointer shadow-lg backdrop-blur-sm"
+          aria-label="Go back"
         >
-          <X size={20} />
+          <ArrowLeft size={16} />
+          <span className="text-xs font-bold uppercase tracking-wider">Back</span>
         </button>
 
         {/* Video Screen */}
@@ -198,6 +210,13 @@ export default function VideoModal({ isOpen, videoUrl, onClose, title }: VideoMo
                     className="p-2 rounded-full hover:bg-white/10 text-white transition-colors cursor-pointer"
                   >
                     {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+                  </button>
+                  <button
+                    onClick={toggleFullscreen}
+                    className="p-2 rounded-full hover:bg-white/10 text-white transition-colors cursor-pointer"
+                    title="Fullscreen"
+                  >
+                    <Maximize2 size={20} />
                   </button>
                 </div>
               </div>

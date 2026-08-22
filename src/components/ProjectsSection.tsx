@@ -186,7 +186,7 @@ export default function ProjectsSection({ onPlayVideo }: ProjectsSectionProps) {
       duration: "00:15",
       description: "High-converting 9:16 vertical AI advertisement featuring fast-paced visual hooks.",
       thumbnail: getAssetPath("/assets/ai-ad-1-thumb.jpeg"),
-      videoUrl: getAssetPath("/assets/ai-ad-1.mp4"),
+      videoUrl: getAssetPath("/assets/Ai-Ad-1.mp4"),
     },
     {
       id: "ai-ad-2",
@@ -196,7 +196,7 @@ export default function ProjectsSection({ onPlayVideo }: ProjectsSectionProps) {
       duration: "00:15",
       description: "Cinematic 9:16 video advertisement tailored for maximum social media engagement.",
       thumbnail: getAssetPath("/assets/ai-ad-2-thumb.jpeg"),
-      videoUrl: getAssetPath("/assets/ai-ad-2.mp4"),
+      videoUrl: getAssetPath("/assets/Ai-Ad-2.mp4"),
     },
     {
       id: "ai-ad-3",
@@ -206,7 +206,7 @@ export default function ProjectsSection({ onPlayVideo }: ProjectsSectionProps) {
       duration: "00:15",
       description: "Vibrant product advertisement utilizing AI generative graphics and motion transitions.",
       thumbnail: getAssetPath("/assets/ai-ad-3-thumb.jpeg"),
-      videoUrl: getAssetPath("/assets/ai-ad-3.mp4"),
+      videoUrl: getAssetPath("/assets/Ai-Ad-3.mp4"),
     },
     {
       id: "ai-ad-4",
@@ -216,7 +216,7 @@ export default function ProjectsSection({ onPlayVideo }: ProjectsSectionProps) {
       duration: "00:15",
       description: "Attention-grabbing hook-focused AI commercial for high click-through rates.",
       thumbnail: getAssetPath("/assets/ai-ad-4-thumb.jpeg"),
-      videoUrl: getAssetPath("/assets/ai-ad-4.mp4"),
+      videoUrl: getAssetPath("/assets/Ai-Ad-4.mp4"),
     },
     {
       id: "ai-ad-5",
@@ -226,7 +226,7 @@ export default function ProjectsSection({ onPlayVideo }: ProjectsSectionProps) {
       duration: "00:15",
       description: "AI-generated aesthetic visual story designed for vertical mobile screens.",
       thumbnail: getAssetPath("/assets/ai-ad-5-thumb.jpeg"),
-      videoUrl: getAssetPath("/assets/ai-ad-5.mp4"),
+      videoUrl: getAssetPath("/assets/Ai-Ad-5.mp4"),
     },
     {
       id: "ai-ad-6",
@@ -236,7 +236,7 @@ export default function ProjectsSection({ onPlayVideo }: ProjectsSectionProps) {
       duration: "00:15",
       description: "Dynamically edited product promotional video showcasing key benefits via AI visuals.",
       thumbnail: getAssetPath("/assets/ai-ad-6-thumb.jpeg"),
-      videoUrl: getAssetPath("/assets/ai-ad-6-thumb.mp4"),
+      videoUrl: getAssetPath("/assets/Ai-Ad-6-Thumb.mp4"),
     },
   ];
 

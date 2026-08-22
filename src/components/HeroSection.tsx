@@ -12,6 +12,8 @@ interface HeroSectionProps {
 export default function HeroSection({ onViewProjects }: HeroSectionProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isMuted, setIsMuted] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const isPlayingRef = useRef(false);
   const [hasEnded, setHasEnded] = useState(false);
   const [videoSrc, setVideoSrc] = useState<string>("");
   const playPromiseRef = useRef<Promise<void> | null>(null);
@@ -26,34 +28,50 @@ export default function HeroSection({ onViewProjects }: HeroSectionProps) {
     setVideoSrc(src);
   }, []);
 
-  // Attempt unmuted autoplay on initial load
-  useEffect(() => {
-    if (!videoSrc) return;
-
+  const handlePlayVideo = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
     const video = videoRef.current;
-    if (!video) return;
+    if (video) {
+      video.muted = false;
+      setIsMuted(false);
+      playPromiseRef.current = video.play();
+      playPromiseRef.current
+        .then(() => {
+          setIsPlaying(true);
+          isPlayingRef.current = true;
+        })
+        .catch((error) => {
+          console.log("Play failed, trying muted:", error);
+          if (video) {
+            video.muted = true;
+            setIsMuted(true);
+            playPromiseRef.current = video.play();
+            playPromiseRef.current
+              .then(() => {
+                setIsPlaying(true);
+                isPlayingRef.current = true;
+              })
+              .catch((err) => {
+                console.log("Muted play failed too:", err);
+              });
+          }
+        });
+    }
+  };
 
-    // Try playing unmuted first
-    video.muted = false;
-    playPromiseRef.current = video.play();
-    playPromiseRef.current
-      .then(() => {
-        // Success! Update state
-        setIsMuted(false);
-      })
-      .catch((error) => {
-        // Blocked by browser autoplay policy. Play muted.
-        console.log("Unmuted autoplay blocked, playing muted instead:", error);
-        if (video) {
-          video.muted = true;
-          setIsMuted(true);
-          playPromiseRef.current = video.play();
-          playPromiseRef.current.catch((err) => {
-            console.log("Muted autoplay failed:", err);
-          });
-        }
-      });
-  }, [videoSrc]);
+  const handleVideoClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const video = videoRef.current;
+    if (video) {
+      if (video.paused) {
+        handlePlayVideo();
+      } else {
+        video.pause();
+        setIsPlaying(false);
+        isPlayingRef.current = false;
+      }
+    }
+  };
 
   // Scroll Play/Pause logic
   useEffect(() => {
@@ -154,6 +172,8 @@ export default function HeroSection({ onViewProjects }: HeroSectionProps) {
   const handleVideoEnded = () => {
     setHasEnded(true);
     hasEndedRef.current = true;
+    setIsPlaying(false);
+    isPlayingRef.current = false;
     const video = videoRef.current;
     if (video) {
       video.currentTime = 0;
@@ -166,7 +186,13 @@ export default function HeroSection({ onViewProjects }: HeroSectionProps) {
     if (video) {
       video.currentTime = 0;
       video.muted = isMuted; // Preserve current user mute preference on replay
-      video.play().catch((err) => console.log("Replay failed:", err));
+      playPromiseRef.current = video.play();
+      playPromiseRef.current
+        .then(() => {
+          setIsPlaying(true);
+          isPlayingRef.current = true;
+        })
+        .catch((err) => console.log("Replay failed:", err));
       setHasEnded(false);
       hasEndedRef.current = false;
     }
@@ -181,14 +207,28 @@ export default function HeroSection({ onViewProjects }: HeroSectionProps) {
       <video
         ref={videoRef}
         key={videoSrc}
-        className="w-full h-auto md:absolute md:inset-0 md:h-full md:object-cover pointer-events-none select-none z-0"
+        className="w-full h-auto md:absolute md:inset-0 md:h-full md:object-cover z-0 pointer-events-auto cursor-pointer"
         src={videoSrc || undefined}
-        autoPlay
+        poster={getAssetPath("/assets/back-video-thumbnail.jpg")}
         playsInline
         preload="metadata"
-        muted={true}
+        muted={isMuted}
         onEnded={handleVideoEnded}
+        onClick={handleVideoClick}
       />
+
+      {/* Play Button Overlay shown when video is paused/not started */}
+      {!isPlaying && !hasEnded && (
+        <div className="absolute inset-0 flex items-center justify-center z-30 bg-black/45 backdrop-blur-[2px] transition-all duration-300">
+          <button
+            onClick={handlePlayVideo}
+            className="w-12 h-12 md:w-20 md:h-20 rounded-full flex items-center justify-center bg-primary-purple text-white shadow-[0_0_30px_rgba(124,58,237,0.85)] border border-primary-purple/50 hover:scale-105 hover:bg-primary-purple/95 active:scale-95 transition-all duration-300 cursor-pointer"
+            aria-label="Play intro video"
+          >
+            <Play className="w-5 h-5 md:w-7 md:h-7 ml-0.5 md:ml-1 text-white animate-pulse" fill="white" />
+          </button>
+        </div>
+      )}
 
       {/* Replay Overlay shown when the intro video ends */}
       {hasEnded && (
