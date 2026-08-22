@@ -30,12 +30,8 @@ function ProjectCard({
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoDuration, setVideoDuration] = useState<number | null>(null);
   const playPromiseRef = useRef<Promise<void> | null>(null);
-  const isTouchRef = useRef(false);
 
   const handleMouseEnter = () => {
-    // Only run hover playback if the interaction was not a touch tap
-    if (isTouchRef.current) return;
-
     const video = videoRef.current;
     if (video) {
       video.muted = true; // Always play muted on hover preview to guarantee no autoplay block
@@ -54,8 +50,6 @@ function ProjectCard({
   };
 
   const handleMouseLeave = () => {
-    isTouchRef.current = false; // Reset touch state
-
     const video = videoRef.current;
     if (video) {
       try {
@@ -90,7 +84,6 @@ function ProjectCard({
       onClick={() => onPlayVideo(project.videoUrl, project.name)}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onTouchStart={() => { isTouchRef.current = true; }}
       className="group glass-card rounded-card overflow-hidden cursor-pointer relative flex flex-col w-full"
     >
       {/* Media Card Aspect ratio (9:16 for vertical ads) */}
