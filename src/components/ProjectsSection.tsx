@@ -53,11 +53,23 @@ function ProjectCard({
   const handleMouseLeave = () => {
     const video = videoRef.current;
     if (video) {
-      try {
-        video.pause();
-        video.currentTime = 0;
-      } catch (err) {
-        console.log("Pause failed:", err);
+      if (playPromiseRef.current) {
+        playPromiseRef.current
+          .then(() => {
+            video.pause();
+            video.currentTime = 0;
+          })
+          .catch(() => {
+            video.pause();
+            video.currentTime = 0;
+          });
+      } else {
+        try {
+          video.pause();
+          video.currentTime = 0;
+        } catch (err) {
+          console.log("Pause failed:", err);
+        }
       }
     }
   };
