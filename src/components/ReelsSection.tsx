@@ -131,17 +131,17 @@ export default function ReelsSection({ onPlayReel }: ReelsSectionProps) {
   const reels: ReelItem[] = [
     {
       id: "reel-1",
-      title: "GUDUP Juice Launch AI Commercial",
-      videoUrl: getAssetPath("/assets/Video1.mp4"),
-      likes: "24.5K",
-      comments: "1.2K"
+      title: "Instagram Reel 1",
+      videoUrl: getAssetPath("/assets/reel-1.mp4"),
+      likes: "45.2K",
+      comments: "2.1K"
     },
     {
       id: "reel-2",
-      title: "Sunburn Festival Energy Edit",
-      videoUrl: getAssetPath("/assets/back-video.mp4"),
-      likes: "18.3K",
-      comments: "840"
+      title: "Instagram Reel 2",
+      videoUrl: getAssetPath("/assets/reel-2.mp4"),
+      likes: "38.6K",
+      comments: "1.8K"
     },
     {
       id: "reel-3",

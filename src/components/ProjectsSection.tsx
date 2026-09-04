@@ -29,6 +29,7 @@ function ProjectCard({
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoDuration, setVideoDuration] = useState<number | null>(null);
+  const [imgError, setImgError] = useState(false);
   const playPromiseRef = useRef<Promise<void> | null>(null);
 
   const handleMouseEnter = () => {
@@ -102,10 +103,11 @@ function ProjectCard({
         />
 
         {/* Thumbnail Overlay to show when not hovered */}
-        {project.thumbnail && (
+        {project.thumbnail && !imgError && (
           <img
             src={project.thumbnail}
             alt={project.name}
+            onError={() => setImgError(true)}
             className="absolute inset-0 w-full h-full object-cover pointer-events-none transition-all duration-300 z-10 opacity-100 group-hover:opacity-0 group-hover:invisible"
           />
         )}
@@ -148,6 +150,7 @@ function ProjectCard({
 export default function ProjectsSection({ onPlayVideo }: ProjectsSectionProps) {
   const tabs = [
     "All",
+    "Reels",
     "AI Ads",
     "Commercial",
     "Education",
@@ -156,13 +159,32 @@ export default function ProjectsSection({ onPlayVideo }: ProjectsSectionProps) {
     "Food",
     "Real Estate",
     "Travel",
-    "Reels",
     "Cinematic",
   ];
 
   const [activeTab, setActiveTab] = useState("All");
 
   const projects: Project[] = [
+    {
+      id: "reel-1",
+      name: "Instagram Reel 1",
+      client: "Reel Project",
+      category: "Reels",
+      duration: "00:30",
+      description: "Fast-paced vertical reel engineered for high audience retention and viral reach.",
+      thumbnail: getAssetPath("/assets/reel-1-thumb.jpeg"),
+      videoUrl: getAssetPath("/assets/reel-1.mp4"),
+    },
+    {
+      id: "reel-2",
+      name: "Instagram Reel 2",
+      client: "Reel Project",
+      category: "Reels",
+      duration: "00:30",
+      description: "Dynamic short-form reel featuring snappy cuts, sound design, and visual hooks.",
+      thumbnail: getAssetPath("/assets/reel-2-thumb.jpeg"),
+      videoUrl: getAssetPath("/assets/reel-2.mp4"),
+    },
     {
       id: "ai-ad-1",
       name: "AI Ad Commercial 1",
